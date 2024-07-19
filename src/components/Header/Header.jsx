@@ -5,7 +5,7 @@ import SearchIcon from "@material-ui/icons/Search"
 
 import useStyles from "./styles"
 
-const Header = () => {
+const Header = React.memo(() => {
 	const classes = useStyles()
 
 	return (
@@ -28,6 +28,6 @@ const Header = () => {
 			</Toolbar>
 		</AppBar>
 	)
-}
+})
 
 export default Header

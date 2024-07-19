@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { createRef } from "react"
 import { Map as YMap } from "@pbe/react-yandex-maps"
 import { Paper, Typography, useMediaQuery } from "@material-ui/core"
 
@@ -13,8 +13,13 @@ const Map = ({ setCoordinates, setBounds, coordinates }) => {
 	const getCoords = (e) => {
 		const [lat, lng] = e.get("coords")
 		setCoordinates({ lat, lng })
+		const [ne /*north-east северо-восток правый верхний*/, sw /*south-west юго-восток левый нижний*/] = e.get("target").getBounds()
+		setBounds({ ne, sw })
 		console.log(lat, lng)
+		console.log(ne, sw, e.get("target").getBounds())
 	}
+
+	// StackOverflow
 
 	return (
 		<div className={classes.mapContainer}>
