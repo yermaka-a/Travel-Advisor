@@ -5,17 +5,25 @@ import { getPlacesData } from "./api"
 import Header from "./components/Header/Header"
 import Map from "./components/Map/Map"
 import List from "./components/List/List"
+
+import { YMaps } from "@pbe/react-yandex-maps"
 const App = () => {
 	const [places, setPlaces] = useState([])
 	const [coordinates, setCoordinates] = useState({})
 	const [bounds, setBounds] = useState(null)
 
 	useEffect(() => {
-		getPlacesData().then((data) => {
-			console.log(data)
-			setPlaces(data)
+		navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+			console.log(latitude, longitude)
+			setCoordinates({ lat: latitude, lng: longitude })
 		})
 	}, [])
+
+	useEffect(() => {
+		getPlacesData().then((data) => {
+			setPlaces(data)
+		})
+	}, [coordinates, bounds])
 
 	return (
 		<>
@@ -26,7 +34,9 @@ const App = () => {
 					<List />
 				</Grid>
 				<Grid item xs={12} md={8}>
-					<Map setCoordinates={setCoordinates} setBounds={setBounds} coordinates={coordinates} />
+					<YMaps>
+						<Map setCoordinates={setCoordinates} setBounds={setBounds} coordinates={coordinates} />
+					</YMaps>
 				</Grid>
 			</Grid>
 		</>
