@@ -1,4 +1,3 @@
-export const API_KEY = "7c52d578-6729-49a0-b4bc-c0ad607d5105"
-export const RAPID_URL = "https://travel-advisor.p.rapidapi.com/restaurants/list-in-boundary"
-export const RAPID_HOST = "travel-advisor.p.rapidapi.com"
-export const RAPID_KEY = "0e8fa182cdmsh1359e8fa9b1c08ap17eb29jsn1348bb7172c0"
+export const Y_API_KEY = "7c52d578-6729-49a0-b4bc-c0ad607d5105"
+export const OTM_URL = "https://api.opentripmap.com/0.1/ru/places/bbox"
+export const OTM_KEY = "5ae2e3f221c38a28845f05b65cf406696e17e5ae9401faf516218e6f"

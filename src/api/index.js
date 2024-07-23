@@ -1,27 +1,25 @@
 import axios from "axios"
-import { RAPID_HOST, RAPID_KEY, RAPID_URL } from "../config"
+import { OTM_KEY, OTM_URL } from "../config"
 
-const URL = RAPID_URL
-const options = {
-	method: "GET",
+const URL = OTM_URL
 
-	params: {
-		bl_latitude: "11.847676",
-		tr_latitude: "12.838442",
-		bl_longitude: "109.095461",
-		tr_longitude: "109.149359",
-	},
-	headers: {
-		"x-rapidapi-key": RAPID_KEY,
-		"x-rapidapi-host": RAPID_HOST,
-	},
-}
-
-export const getPlacesData = async () => {
+export const getPlacesData = async (sw, ne) => {
 	try {
-		const {
-			data: { data },
-		} = await axios.get(URL, options)
+		const options = {
+			method: "GET",
+
+			params: {
+				lon_min: ne[1],
+				lat_min: ne[0],
+				lon_max: sw[1],
+				lat_max: sw[0],
+				kinds: "interesting_places",
+				format: "json",
+				apikey: OTM_KEY,
+			},
+		}
+
+		const { data } = await axios.get(URL, options)
 		return data
 	} catch (error) {
 		console.warn(error)
