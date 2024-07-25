@@ -4,43 +4,31 @@ import PlaceDetails from "../PlaceDetails/PlaceDetails"
 
 import useStyles from "./styles"
 
-const List = () => {
+const List = ({ places }) => {
 	const classes = useStyles()
 	const [type, setType] = useState("restaurants")
 	const [rating, setRating] = useState("")
 
-	const places = [
-		{ name: "Cppl Place" },
-		{ name: "Best Beer" },
-		{ name: "Best Steak" },
-		{ name: "Cppl Place" },
-		{ name: "Best Beer" },
-		{ name: "Best Steak" },
-		{ name: "Cppl Place" },
-		{ name: "Best Beer" },
-		{ name: "Best Steak" },
-	]
-
 	return (
 		<div className={classes.container}>
 			<Typography variant="h4" className={classes.listTitle}>
-				Restaurants, Hotels & Attractions around you
+				Рестораны, отели или культурные места в выбранном вами месте!
 			</Typography>
 			<FormControl className={classes.formControl}>
-				<InputLabel>Type</InputLabel>
+				<InputLabel>Что ищем?</InputLabel>
 				<Select value={type} onChange={(e) => setType(e.target.value)}>
-					<MenuItem value="restaurants">Restaurants</MenuItem>
-					<MenuItem value="hotels">Hotels</MenuItem>
-					<MenuItem value="attractions">Attractions</MenuItem>
+					<MenuItem value="restaurants">Рестораны</MenuItem>
+					<MenuItem value="hotels">Отели</MenuItem>
+					<MenuItem value="attractions">Культурные места</MenuItem>
 				</Select>
 			</FormControl>
 			<FormControl className={classes.formControl}>
-				<InputLabel>Rating</InputLabel>
+				<InputLabel>Рейтинг</InputLabel>
 				<Select value={rating} onChange={(e) => setRating(e.target.value)}>
-					<MenuItem value={0}>All</MenuItem>
-					<MenuItem value={3}>Above 3.0</MenuItem>
-					<MenuItem value={4}>Above 4.0</MenuItem>
-					<MenuItem value={5}>Above 5.0</MenuItem>
+					<MenuItem value={0}>Любой</MenuItem>
+					<MenuItem value={3}>От 3.0</MenuItem>
+					<MenuItem value={4}>От 4.0</MenuItem>
+					<MenuItem value={5}>От 5.0</MenuItem>
 				</Select>
 			</FormControl>
 			<Grid container spacing={3} className={classes.list}>

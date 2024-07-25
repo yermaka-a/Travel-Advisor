@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { CssBaseline, Grid } from "@material-ui/core"
-
+import data from "./api/test_data"
 import { getPlacesData } from "./api"
 import Header from "./components/Header/Header"
 import Map from "./components/Map/Map"
@@ -22,8 +22,11 @@ const App = () => {
 		try {
 			if (bounds !== null) {
 				// getPlacesData(bounds.sw, bounds.ne).then((data) => {
-				// 	console.log("axios response: ", data)
+				// 	setPlaces(data)
+				//
 				// })
+				setPlaces(data)
+				console.log(data)
 			}
 		} catch (error) {
 			console.error("The second UseEffect error: ", error)
@@ -34,11 +37,11 @@ const App = () => {
 		<>
 			<CssBaseline />
 			<Header />
-			<Grid container spacing={3} style={{ width: "100%" }}>
-				<Grid item xs={12} md={4}>
-					<List />
+			<Grid container spacing={3}>
+				<Grid item xs={12} md={3}>
+					<List places={places} />
 				</Grid>
-				<Grid item xs={12} md={8}>
+				<Grid item xs={12} md={9}>
 					<YMaps query={{ apikey: Y_API_KEY }}>
 						<Map setCoordinates={setCoordinates} setBounds={setBounds} coordinates={coordinates} />
 					</YMaps>

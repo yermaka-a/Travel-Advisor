@@ -15,6 +15,7 @@ export const getPlacesData = async (sw, ne) => {
 				lat_max: sw[0],
 				kinds: "interesting_places",
 				format: "json",
+				limit: 10,
 				apikey: OTM_KEY,
 			},
 		}

@@ -9,7 +9,7 @@ const Header = React.memo(() => {
 	const classes = useStyles()
 
 	return (
-		<AppBar position="static">
+		<AppBar className={classes.appbar} color="secondary" position="static">
 			<Toolbar className={classes.toolbar}>
 				<Typography variant="h5" className={classes.title}>
 					Travel Advisor
@@ -22,7 +22,7 @@ const Header = React.memo(() => {
 						<div className={classes.searchIcon}>
 							<SearchIcon />
 						</div>
-						<InputBase placeholder="Search..." classes={{ root: classes.inputRoot, input: classes.inputInput }} />
+						<InputBase placeholder="Поиск..." classes={{ root: classes.inputRoot, input: classes.inputInput }} />
 					</div>
 				</Box>
 			</Toolbar>

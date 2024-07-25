@@ -5,30 +5,21 @@ import PhoneIcon from "@material-ui/icons/Phone"
 import Rating from "@material-ui/lab/Rating"
 import useStyles from "./styles"
 
-const PlaceDetails = ({ places }) => {
+const PlaceDetails = ({ place }) => {
 	const classes = useStyles()
+
 	return (
 		<Card elevation={6}>
-			<CardMedia style={{ height: 350 }} image={places.photo ? places.photo.images.large.url : ""}>
+			<CardMedia sx={{ height: 100 }}>
 				<CardContent>
 					<Typography gutterBottom variant="h5">
-						{place.name}
-						<Box display="flex" justifyContent="space-between">
-							<Typography variant="subtitle1"></Typography>
-							<Typography variant="subtitle1">{place.price_level}</Typography>
+						<Box display="flex" justifyContent="align-items">
+							<Typography variant="h5">{place.name}</Typography>
 						</Box>
 						<Box display="flex" justifyContent="space-between">
-							<Typography variant="subtitle1"></Typography>
-							<Typography variant="subtitle1">{place.ranking}</Typography>
+							<Typography variant="subtitle1">Рейтинг известности:</Typography>
+							<Typography variant="subtitle1">{place.rate}</Typography>
 						</Box>
-						{place?.awards?.map((award) => (
-							<Box my={1} display="flex" justifyContent="space-between" alignItems="center">
-								<img src={award.images.small} alt={award.display_name} />
-								<Typography variant="subtitle2" color="textSecondary">
-									{award.display_name}
-								</Typography>
-							</Box>
-						))}
 					</Typography>
 				</CardContent>
 			</CardMedia>
