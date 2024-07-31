@@ -9,26 +9,35 @@ import {
   ListItem,
   List,
   Divider,
+  ListItemIcon,
   ImageListItem,
+  Icon,
 } from "@material-ui/core"
-import Icon from "@material-ui/core/Icon"
+
 import Rating from "@material-ui/lab/Rating"
+import cameraBlockUrl from "../../assets/camera-block.svg"
 
 import useStyles from "./styles"
-import { getPlaceDetails } from "../../api"
+import { checkImgUrl, getPlaceDetails } from "../../api"
 import { testDataObj } from "../../api/test_data"
 const PlaceDetails = ({ place }) => {
   const classes = useStyles()
   const [placeData, setPlaceData] = useState({})
   const [isOpen, changeOpen] = useState(false)
+  const [isUrl, setUrl] = useState(false)
   const openPlaceDetails = () => {
-    getPlaceDetails(place.xid).then((data) => {
-      // setPlaceData(data)
-      // console.log(data)
-      console.log(testDataObj)
-      setPlaceData(testDataObj)
-      changeOpen((prev) => !prev)
-    })
+    if (!isOpen) {
+      getPlaceDetails(place.xid).then((data) => {
+        // setPlaceData(data)
+        // console.log(data)
+        console.log(testDataObj)
+        checkImgUrl(testDataObj.image).then((checkUrl) => {
+          setUrl(checkUrl)
+        })
+        setPlaceData(testDataObj)
+      })
+    }
+    changeOpen((prev) => !prev)
   }
 
   return (
@@ -46,16 +55,34 @@ const PlaceDetails = ({ place }) => {
                 <Zoom in={isOpen}>
                   <Typography>
                     <List>
-                      <ImageListItem
-                        style={{
-                          width: "100%",
-                          height: 180,
-                          border: "solid grey 1px",
-                          borderRadius: "5px",
-                        }}
-                        key={placeData.image}>
-                        <img src={placeData.image} alt="place" />
-                      </ImageListItem>
+                      {isUrl ? (
+                        <ImageListItem
+                          style={{
+                            width: "100%",
+                            height: 180,
+                            border: "solid grey 1px",
+                            borderRadius: "5px",
+                          }}
+                          key={placeData.image}
+                          src={placeData.image}></ImageListItem>
+                      ) : (
+                        <ListItemIcon>
+                          <Icon
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                            }}>
+                            <img
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                              }}
+                              src={cameraBlockUrl}
+                              alt="camera-block"
+                            />
+                          </Icon>
+                        </ListItemIcon>
+                      )}
                       <ListItem> {placeData.address.suburb}</ListItem>
                       <ListItem> {placeData.address.city}</ListItem>
                       <ListItem> {placeData.address.state}</ListItem>

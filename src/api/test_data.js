@@ -330,7 +330,7 @@ export const testDataObj = {
     "src_id": 36639,
   },
   "image":
-    "https://all.culture.ru/uploads/f434e04a8a84093e6d94ed0403f5168f.JPG",
+    "https://all.culture.ru/uploads/f434e04a8a84093e6d94ed0403f5168f.JPGfdsd",
   "preview": {
     "source":
       "https://all.culture.ru/uploads/f434e04a8a84093e6d94ed0403f5168f_w400_h400.JPG",

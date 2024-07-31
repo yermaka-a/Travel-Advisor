@@ -1,4 +1,5 @@
 import axios from "axios"
+
 import { OTM_KEY, OTM_PLACES_URL, OTM_PLACE_URL } from "../config"
 
 const URL = OTM_PLACES_URL
@@ -37,5 +38,14 @@ export const getPlaceDetails = async (id) => {
     return data
   } catch (error) {
     console.warn("getPlaceDetails: ", error)
+  }
+}
+
+export const checkImgUrl = async (url) => {
+  try {
+    await axios.get(url)
+    return true
+  } catch (error) {
+    return false
   }
 }
