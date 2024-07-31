@@ -8,8 +8,13 @@ import List from "./components/List/List"
 
 import { Y_API_KEY } from "./config"
 import { YMaps } from "@pbe/react-yandex-maps"
+import { usePlacesStore } from "./states"
 const App = () => {
-  const [places, setPlaces] = useState([])
+  const { places, getPlacesData } = usePlacesStore((state) => ({
+    places: state.places,
+    getPlacesData: state.getPlacesData,
+  }))
+
   const [coordinates, setCoordinates] = useState({})
   const [bounds, setBounds] = useState(null)
   useEffect(() => {
@@ -27,8 +32,9 @@ const App = () => {
         //   setPlaces(data)
         //   console.log(data)
         // })
-        setPlaces(data)
-        console.log(data)
+
+        getPlacesData(bounds.sw, bounds.ne)
+        console.log(places)
       }
     } catch (error) {
       console.error("The second UseEffect error: ", error)

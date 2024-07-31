@@ -4,7 +4,7 @@ import { OTM_KEY, OTM_PLACES_URL, OTM_PLACE_URL } from "../config"
 
 const URL = OTM_PLACES_URL
 const PLACE_URL = OTM_PLACE_URL
-export const getPlacesData = async (sw, ne) => {
+export const asyncGetPlacesData = async (sw, ne) => {
   try {
     const options = {
       method: "GET",

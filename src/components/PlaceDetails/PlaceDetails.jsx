@@ -20,6 +20,7 @@ import cameraBlockUrl from "../../assets/camera-block.svg"
 import useStyles from "./styles"
 import { checkImgUrl, getPlaceDetails } from "../../api"
 import { testDataObj } from "../../api/test_data"
+
 const PlaceDetails = ({ place }) => {
   const classes = useStyles()
   const [placeData, setPlaceData] = useState({})
@@ -83,10 +84,16 @@ const PlaceDetails = ({ place }) => {
                           </Icon>
                         </ListItemIcon>
                       )}
-                      <ListItem> {placeData.address.suburb}</ListItem>
-                      <ListItem> {placeData.address.city}</ListItem>
-                      <ListItem> {placeData.address.state}</ListItem>
-                      <ListItem> {placeData.address.country}</ListItem>
+                      <ListItem>
+                        {" "}
+                        {placeData?.address?.house_number} -
+                        {placeData?.address?.suburb} -{" "}
+                        {placeData?.address?.city} -{placeData?.address?.state}{" "}
+                        - {placeData?.address?.country}
+                      </ListItem>
+                      <ListItem>{placeData?.wikipedia_extracts?.text}</ListItem>
+                      <ListItem> </ListItem>
+                      <ListItem></ListItem>
                     </List>
                   </Typography>
                 </Zoom>
