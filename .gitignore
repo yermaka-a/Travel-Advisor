@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-./config/index.js
+/src/config
 # testing
 /coverage
 ./api/test_data.js
