@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import {
-  CircularProgress,
   Grid,
   Typography,
   InputLabel,
@@ -9,10 +8,11 @@ import {
   Select,
 } from "@material-ui/core"
 import PlaceDetails from "../PlaceDetails/PlaceDetails"
-
+import { usePlacesStore } from "../../states/index"
 import useStyles from "./styles"
 
-const List = ({ places }) => {
+const List = () => {
+  const places = usePlacesStore((state) => state.places)
   const classes = useStyles()
   const [type, setType] = useState("restaurants")
   const [rating, setRating] = useState("")
@@ -40,8 +40,8 @@ const List = ({ places }) => {
         </Select>
       </FormControl>
       <Grid container spacing={3} className={classes.list}>
-        {places?.map((place, i) => (
-          <Grid item key={i} xs={12}>
+        {places?.map((place) => (
+          <Grid item key={place.idx} xs={12}>
             <PlaceDetails place={place} />
           </Grid>
         ))}

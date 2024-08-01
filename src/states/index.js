@@ -7,7 +7,8 @@ export const usePlacesStore = create(
     places: [],
     getPlacesData: async (sw, ne) => {
       const data = await asyncGetPlacesTestData(sw, ne)
-      set((state) => ({ places: [...data, ...state.places] }))
+      set(() => ({ places: [...data] }))
+      return data
     },
   })),
 )
