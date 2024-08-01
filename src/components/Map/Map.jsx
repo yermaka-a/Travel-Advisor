@@ -7,8 +7,12 @@ import useStyles from "./styles"
 
 const Map = () => {
   const classes = useStyles()
-  const getPlacesData = usePlacesStore((state) => state.getPlacesData)
-  const [bounds, setBounds] = useState(null)
+  const { getPlacesData, setBounds, bounds } = usePlacesStore((state) => ({
+    bounds: state.bounds,
+    getPlacesData: state.getPlacesData,
+    setBounds: state.setBounds,
+  }))
+
   const [coordinates, setCoordinates] = useState({})
   const { lat, lng } = coordinates
   const yMapRef = useRef(null)
@@ -25,9 +29,7 @@ const Map = () => {
   useEffect(() => {
     try {
       if (bounds !== null) {
-        getPlacesData(bounds.sw, bounds.ne).then((data) => {
-          console.log(data)
-        })
+        getPlacesData(bounds.sw, bounds.ne)
       }
     } catch (error) {
       console.error("The second UseEffect error: ", error)

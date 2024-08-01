@@ -8,6 +8,7 @@ import {
   Zoom,
   ListItem,
   List,
+  Button,
   Divider,
   ListItemIcon,
   ImageListItem,
@@ -18,26 +19,24 @@ import Rating from "@material-ui/lab/Rating"
 import cameraBlockUrl from "../../assets/camera-block.svg"
 
 import useStyles from "./styles"
-import { checkImgUrl, getPlaceDetails } from "../../api"
-import { testDataObj } from "../../api/test_data"
+import { getPlaceDetails } from "../../api"
 
 const PlaceDetails = ({ place }) => {
   const classes = useStyles()
-  const [placeData, setPlaceData] = useState({})
+  const [placeData, setPlaceData] = useState(null)
   const [isOpen, changeOpen] = useState(false)
-  const [isUrl, setUrl] = useState(false)
+  const [isUrl, setUrl] = useState(true)
+
   const openPlaceDetails = () => {
-    if (!isOpen) {
+    if (!isOpen && placeData === null) {
       getPlaceDetails(place.xid).then((data) => {
-        // setPlaceData(data)
-        // console.log(data)
-        console.log(testDataObj)
-        checkImgUrl(testDataObj.image).then((checkUrl) => {
-          setUrl(checkUrl)
-        })
-        setPlaceData(testDataObj)
+        setPlaceData(data)
       })
     }
+    changeOpen((prev) => !prev)
+  }
+
+  const showPlaceOnMap = () => {
     changeOpen((prev) => !prev)
   }
 
@@ -64,8 +63,13 @@ const PlaceDetails = ({ place }) => {
                             border: "solid grey 1px",
                             borderRadius: "5px",
                           }}
-                          key={placeData.image}
-                          src={placeData.image}></ImageListItem>
+                          key={placeData?.image}>
+                          <img
+                            src={placeData?.image}
+                            onLoad={(e) => setUrl(true)}
+                            onError={() => setUrl(false)}
+                          />
+                        </ImageListItem>
                       ) : (
                         <ListItemIcon>
                           <Icon
@@ -85,14 +89,18 @@ const PlaceDetails = ({ place }) => {
                         </ListItemIcon>
                       )}
                       <ListItem>
-                        {" "}
-                        {placeData?.address?.house_number} -
-                        {placeData?.address?.suburb} -{" "}
-                        {placeData?.address?.city} -{placeData?.address?.state}{" "}
-                        - {placeData?.address?.country}
+                        {placeData?.address?.house_number}{" "}
+                        {placeData?.address?.suburb} {placeData?.address?.city}{" "}
+                        {placeData?.address?.state}{" "}
+                        {placeData?.address?.country}
                       </ListItem>
                       <ListItem>{placeData?.wikipedia_extracts?.text}</ListItem>
-                      <ListItem> </ListItem>
+                      <Button
+                        variant="contained"
+                        className={classes.btn}
+                        onClick={showPlaceOnMap}>
+                        Показать на карте
+                      </Button>
                       <ListItem></ListItem>
                     </List>
                   </Typography>
@@ -103,7 +111,7 @@ const PlaceDetails = ({ place }) => {
                 <Typography
                   variant="subtitle1"
                   className={classes.additionalInfo}>
-                  Показать больше инфо...
+                  Показать больше...
                 </Typography>
               </Zoom>
             )}

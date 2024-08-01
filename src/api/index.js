@@ -4,7 +4,7 @@ import { OTM_KEY, OTM_PLACES_URL, OTM_PLACE_URL } from "../config"
 
 const URL = OTM_PLACES_URL
 const PLACE_URL = OTM_PLACE_URL
-export const asyncGetPlacesData = async (sw, ne) => {
+export const asyncGetPlacesData = async (sw, ne, ...args) => {
   try {
     const options = {
       method: "GET",
@@ -14,17 +14,18 @@ export const asyncGetPlacesData = async (sw, ne) => {
         lat_min: ne[0],
         lon_max: sw[1],
         lat_max: sw[0],
-        kinds: "interesting_places",
+        kinds: args[0],
         format: "json",
-        limit: 10,
+        limit: 100,
         apikey: OTM_KEY,
       },
     }
 
     const { data } = await axios.get(URL, options)
+    console.log(data)
     return data
   } catch (error) {
-    console.warn(error)
+    console.error(error)
   }
 }
 
@@ -38,14 +39,5 @@ export const getPlaceDetails = async (id) => {
     return data
   } catch (error) {
     console.warn("getPlaceDetails: ", error)
-  }
-}
-
-export const checkImgUrl = async (url) => {
-  try {
-    await axios.get(url)
-    return true
-  } catch (error) {
-    return false
   }
 }

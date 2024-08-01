@@ -27,4 +27,7 @@ export default makeStyles(() => ({
       color: "#EE204D",
     },
   },
+  btn: {
+    color: "#f50057",
+  },
 }))
