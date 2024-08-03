@@ -1,4 +1,6 @@
-import React, { useState } from "react"
+import type { Place, PlaceDetails } from "./types"
+import classes from "./styles"
+import { useState } from "react"
 import {
   Box,
   Typography,
@@ -13,24 +15,23 @@ import {
   ListItemIcon,
   ImageListItem,
   Icon,
-} from "@material-ui/core"
+} from '@mui/material'
 
-import Rating from "@material-ui/lab/Rating"
+import Rating from '@mui/material/Rating';
 import cameraBlockUrl from "../../assets/camera-block.svg"
 
-import useStyles from "./styles"
 import { getPlaceDetails } from "../../api"
 
-const PlaceDetails = ({ place }) => {
-  const classes = useStyles()
-  const [placeData, setPlaceData] = useState(null)
-  const [isOpen, changeOpen] = useState(false)
-  const [isUrl, setUrl] = useState(true)
+const PlaceDetails = ({ place }: { place: Place }) => {
+
+  const [placeData, setPlaceData] = useState<PlaceDetails | null>(null)
+  const [isOpen, changeOpen] = useState<boolean>(false)
+  const [isUrl, setUrl] = useState<boolean>(true)
 
   const openPlaceDetails = () => {
     if (!isOpen && placeData === null) {
       getPlaceDetails(place.xid).then((data) => {
-        setPlaceData(data)
+        if (data) setPlaceData(data)
       })
     }
     changeOpen((prev) => !prev)
@@ -41,7 +42,7 @@ const PlaceDetails = ({ place }) => {
   }
 
   return (
-    <Card elevation={6} className={classes.card} onClick={openPlaceDetails}>
+    <Card elevation={6} sx={classes.card} onClick={openPlaceDetails}>
       <CardMedia sx={{ height: 100 }}>
         <CardContent>
           <Typography gutterBottom variant="h5">
@@ -51,7 +52,7 @@ const PlaceDetails = ({ place }) => {
 
             {isOpen ? (
               <Box sx={{ display: "flex" }}>
-                <Divider variant="root" />
+                <Divider variant="inset" />
                 <Zoom in={isOpen}>
                   <Typography>
                     <List>
@@ -66,7 +67,7 @@ const PlaceDetails = ({ place }) => {
                           key={placeData?.image}>
                           <img
                             src={placeData?.image}
-                            onLoad={(e) => setUrl(true)}
+                            onLoad={() => setUrl(true)}
                             onError={() => setUrl(false)}
                           />
                         </ImageListItem>
@@ -97,7 +98,7 @@ const PlaceDetails = ({ place }) => {
                       <ListItem>{placeData?.wikipedia_extracts?.text}</ListItem>
                       <Button
                         variant="contained"
-                        className={classes.btn}
+                        sx={classes.btn}
                         onClick={showPlaceOnMap}>
                         Показать на карте
                       </Button>
@@ -110,7 +111,7 @@ const PlaceDetails = ({ place }) => {
               <Zoom in={!isOpen}>
                 <Typography
                   variant="subtitle1"
-                  className={classes.additionalInfo}>
+                  sx={classes.additionalInfo}>
                   Показать больше...
                 </Typography>
               </Zoom>

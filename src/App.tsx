@@ -1,10 +1,10 @@
-import { CssBaseline, Grid } from "@material-ui/core"
+import { CssBaseline, Grid } from "@mui/material"
 
 import Header from "./components/Header/Header"
 import Map from "./components/Map/Map"
 import List from "./components/List/List"
 
-import { Y_API_KEY } from "./config"
+import ENV from "./config"
 import { YMaps } from "@pbe/react-yandex-maps"
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
           <List />
         </Grid>
         <Grid item xs={12} md={9}>
-          <YMaps query={{ apikey: Y_API_KEY }}>
+          <YMaps query={{ apikey: ENV.Y_API_KEY }}>
             <Map />
           </YMaps>
         </Grid>

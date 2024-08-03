@@ -1,4 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
+import classes from "./styles"
+
 import {
   Grid,
   Typography,
@@ -6,14 +8,14 @@ import {
   MenuItem,
   FormControl,
   Select,
-} from "@material-ui/core"
+} from "@mui/material"
 import PlaceDetails from "../PlaceDetails/PlaceDetails"
 import { usePlacesStore } from "../../states/index"
-import useStyles from "./styles"
 
+import { ListProps } from "./types"
 const List = () => {
   const { places, type, rating, setRating, setType, getPlacesData } =
-    usePlacesStore((state) => ({
+    usePlacesStore<ListProps>((state) => ({
       places: state.places,
       type: state.type,
       rating: state.rating,
@@ -21,48 +23,45 @@ const List = () => {
       setType: state.setType,
       getPlacesData: state.getPlacesData,
     }))
-  const classes = useStyles()
 
   return (
-    <div className={classes.container}>
-      <Typography variant="h4" className={classes.listTitle}>
+    <div>
+      <Typography variant="h4" sx={classes.listTitle}>
         Рестораны, отели или культурные места в выбранном вами месте!
       </Typography>
-      <FormControl className={classes.formControl}>
+      <FormControl sx={classes.formControl}>
         <InputLabel>Что ищем?</InputLabel>
         <Select
-          className={classes.select}
+          sx={classes.select}
           value={type}
           onChange={(e) => {
             setType(e.target.value)
             getPlacesData()
           }}>
-          <Typography className={classes.listTitle}>Жильё</Typography>
+          <Typography sx={classes.listTitle}>Жильё</Typography>
           <MenuItem value="other_hotels">Отели</MenuItem>
           <MenuItem value="hostels">Хостелы</MenuItem>
           <MenuItem value="motels">Мотели</MenuItem>
           <MenuItem value="resorts">Курорты</MenuItem>
-          <Typography className={classes.listTitle}>Еда</Typography>
+          <Typography sx={classes.listTitle}>Еда</Typography>
           <MenuItem value="restaurants">Рестораны</MenuItem>
           <MenuItem value="bars">Бары</MenuItem>
           <MenuItem value="cafes">Кафе</MenuItem>
           <MenuItem value="fast_food">ФастФуд</MenuItem>
           <MenuItem value="food_courts">ФудКорты</MenuItem>
-          <Typography className={classes.listTitle}>
-            Культурные места
-          </Typography>
+          <Typography sx={classes.listTitle}>Культурные места</Typography>
           <MenuItem value="museums">Музеи</MenuItem>
           <MenuItem value="cultural">Культурные</MenuItem>
           <MenuItem value="historic">Исторические</MenuItem>
         </Select>
       </FormControl>
-      <FormControl className={classes.formControl}>
+      <FormControl sx={classes.formControl}>
         <InputLabel>Рейтинг</InputLabel>
         <Select
-          className={classes.select}
+          sx={classes.select}
           value={rating}
           onChange={(e) => {
-            setRating(e.target.value)
+            setRating(+e.target.value)
           }}>
           <MenuItem value={0}>Любой</MenuItem>
           <MenuItem value={3}>От 3.0</MenuItem>
@@ -70,12 +69,12 @@ const List = () => {
           <MenuItem value={5}>От 5.0</MenuItem>
         </Select>
       </FormControl>
-      <Grid container spacing={3} className={classes.list}>
+      <Grid container spacing={3}>
         {places
-          .filter((place) => place.rate >= rating)
+          .filter((place) => +place?.rate >= rating)
           .map((place) => (
-            <Grid item xs={12}>
-              <PlaceDetails key={place.idx} place={place} />
+            <Grid key={place.xid} item xs={12}>
+              <PlaceDetails place={place} />
             </Grid>
           ))}
       </Grid>

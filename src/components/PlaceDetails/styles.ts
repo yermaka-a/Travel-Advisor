@@ -1,6 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles"
-
-export default makeStyles(() => ({
+export default {
   chip: {
     margin: "5px 5px 5px 0",
   },
@@ -30,4 +28,4 @@ export default makeStyles(() => ({
   btn: {
     color: "#f50057",
   },
-}))
+}
