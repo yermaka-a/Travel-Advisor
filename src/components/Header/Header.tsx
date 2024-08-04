@@ -6,7 +6,7 @@ import SearchIcon from "@mui/icons-material/Search"
 const Search = styled("div")({
   position: "relative",
   paddingLeft: "1rem",
-  borderRadius: "1rem",
+  borderRadius: "0.6rem",
   backgroundColor: "white",
   marginRight: "2rem",
   marginLeft: 0,
@@ -16,25 +16,20 @@ const Search = styled("div")({
 
 const Header = () => {
   return (
-    <AppBar sx={classes.appbar} color="secondary" position="static">
+    <AppBar sx={classes.appbar} position="static">
       <Toolbar sx={classes.toolbar}>
         <Typography variant="h5" sx={classes.title}>
           Travel Advisor
         </Typography>
-        <Box display="flex">
+        <Box sx={classes.search} display="flex">
           <Typography variant="h6" sx={classes.title}>
-            Explore new places
+            Исследуйте новые места!
           </Typography>
           <Search>
             <Box sx={classes.searchIcon}>
               <SearchIcon />
             </Box>
-            <InputBase
-              placeholder="Поиск..."
-              classes={{
-                root: classes.inputRoot.color,
-              }}
-            />
+            <InputBase sx={classes.inputRoot} placeholder="Поиск..." />
           </Search>
         </Box>
       </Toolbar>

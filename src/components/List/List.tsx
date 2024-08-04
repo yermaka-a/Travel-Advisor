@@ -1,4 +1,3 @@
-import React from "react"
 import classes from "./styles"
 
 import {
@@ -25,12 +24,12 @@ const List = () => {
     }))
 
   return (
-    <div>
+    <div style={{ paddingRight: "1rem" }}>
       <Typography variant="h4" sx={classes.listTitle}>
         Рестораны, отели или культурные места в выбранном вами месте!
       </Typography>
       <FormControl sx={classes.formControl}>
-        <InputLabel>Что ищем?</InputLabel>
+        <InputLabel sx={classes.label}>Что ищем?</InputLabel>
         <Select
           sx={classes.select}
           value={type}
@@ -56,7 +55,7 @@ const List = () => {
         </Select>
       </FormControl>
       <FormControl sx={classes.formControl}>
-        <InputLabel>Рейтинг</InputLabel>
+        <InputLabel sx={classes.label}>Рейтинг</InputLabel>
         <Select
           sx={classes.select}
           value={rating}
@@ -69,7 +68,7 @@ const List = () => {
           <MenuItem value={5}>От 5.0</MenuItem>
         </Select>
       </FormControl>
-      <Grid container spacing={3}>
+      <Grid sx={classes.container} spacing={3}>
         {places
           .filter((place) => +place?.rate >= rating)
           .map((place) => (

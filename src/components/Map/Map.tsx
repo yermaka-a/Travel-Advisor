@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles"
 import { useEffect, useRef, useState } from "react"
 import { Map as YMap } from "@pbe/react-yandex-maps"
 
-import { Bounds, getPlacesData } from "./types"
+import { Bounds } from "./types"
 import { MapEvent } from "yandex-maps"
 import { usePlacesStore } from "../../states"
 
@@ -15,9 +15,7 @@ const MapContainer = styled("div")({
 const Map = () => {
   const yMapRef = useRef<ymaps.Map>()
 
-  const { getPlacesData } = usePlacesStore<getPlacesData>((state) => ({
-    getPlacesData: state.getPlacesData,
-  }))
+  const getPlacesData = usePlacesStore((state) => state.getPlacesData)
 
   const [coordinates, setCoordinates] = useState<{
     lat: number

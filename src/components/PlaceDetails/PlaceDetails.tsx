@@ -15,15 +15,14 @@ import {
   ListItemIcon,
   ImageListItem,
   Icon,
-} from '@mui/material'
+} from "@mui/material"
 
-import Rating from '@mui/material/Rating';
+import Rating from "@mui/material/Rating"
 import cameraBlockUrl from "../../assets/camera-block.svg"
 
 import { getPlaceDetails } from "../../api"
 
 const PlaceDetails = ({ place }: { place: Place }) => {
-
   const [placeData, setPlaceData] = useState<PlaceDetails | null>(null)
   const [isOpen, changeOpen] = useState<boolean>(false)
   const [isUrl, setUrl] = useState<boolean>(true)
@@ -43,16 +42,15 @@ const PlaceDetails = ({ place }: { place: Place }) => {
 
   return (
     <Card elevation={6} sx={classes.card} onClick={openPlaceDetails}>
-      <CardMedia sx={{ height: 100 }}>
+      <CardMedia sx={classes.cardMedia}>
         <CardContent>
           <Typography gutterBottom variant="h5">
             <Box display="flex" justifyContent="align-items">
               <Typography variant="h5">{place.name}</Typography>
             </Box>
-
             {isOpen ? (
               <Box sx={{ display: "flex" }}>
-                <Divider variant="inset" />
+                <Divider variant="fullWidth" />
                 <Zoom in={isOpen}>
                   <Typography>
                     <List>
@@ -90,35 +88,39 @@ const PlaceDetails = ({ place }: { place: Place }) => {
                         </ListItemIcon>
                       )}
                       <ListItem>
-                        {placeData?.address?.house_number}{" "}
-                        {placeData?.address?.suburb} {placeData?.address?.city}{" "}
-                        {placeData?.address?.state}{" "}
-                        {placeData?.address?.country}
+                        {placeData?.address?.house_number &&
+                          `${placeData?.address?.house_number}, `}
+                        {placeData?.address?.suburb &&
+                          `${placeData?.address?.suburb}, `}
+                        {placeData?.address?.city &&
+                          `${placeData?.address?.city}, `}
+                        {placeData?.address?.state &&
+                          `${placeData?.address?.state}, `}
+                        {placeData?.address?.country &&
+                          `${placeData?.address?.country}`}
                       </ListItem>
                       <ListItem>{placeData?.wikipedia_extracts?.text}</ListItem>
                       <Button
+                        color="inherit"
                         variant="contained"
                         sx={classes.btn}
                         onClick={showPlaceOnMap}>
                         Показать на карте
                       </Button>
-                      <ListItem></ListItem>
                     </List>
                   </Typography>
                 </Zoom>
               </Box>
             ) : (
               <Zoom in={!isOpen}>
-                <Typography
-                  variant="subtitle1"
-                  sx={classes.additionalInfo}>
+                <Typography variant="subtitle1" sx={classes.additionalInfo}>
                   Показать больше...
                 </Typography>
               </Zoom>
             )}
             <Box display="flex" justifyContent="space-between">
-              <Typography variant="subtitle1">Рейтинг известности:</Typography>
-              <Rating value={Number(place.rate)}></Rating>
+              <Typography variant="body2">Рейтинг известности:</Typography>
+              <Rating readOnly size="small" value={Number(place.rate)}></Rating>
             </Box>
           </Typography>
         </CardContent>

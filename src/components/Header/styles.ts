@@ -1,19 +1,25 @@
+import { colors, createTheme } from "@mui/material"
+
+const theme = createTheme()
+theme.palette.primary.main = "#f50057"
 export default {
   title: {
-    display: "none",
+    display: "block",
   },
 
   searchIcon: {
-    paddingRight: "2rem",
     height: "100%",
     position: "absolute",
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
+    color: colors.grey[400],
     justifyContent: "center",
+    left: "0.5rem",
   },
   inputRoot: {
-    color: "inherit",
+    color: "black",
+    paddingLeft: "1rem",
   },
 
   toolbar: {
@@ -23,6 +29,13 @@ export default {
   },
   appbar: {
     display: "flex",
-    marginBottom: "4rem",
+    marginBottom: "2rem",
+    backgroundColor: theme.palette.primary.main,
+  },
+  search: {
+    position: "relative",
+    flexDirection: "column",
+    justifyContent: "center",
+    right: "40rem",
   },
 }

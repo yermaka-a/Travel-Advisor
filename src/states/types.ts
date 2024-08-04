@@ -4,7 +4,7 @@ import type { Place } from "../components/PlaceDetails/types"
 export interface PlacesStore {
   type: string
   rating: number
-
+  bounds: Bounds
   places: Place[]
 
   setRating: (rating: number) => void

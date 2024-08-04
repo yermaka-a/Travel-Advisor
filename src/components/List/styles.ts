@@ -1,10 +1,14 @@
+import { createTheme } from "@mui/material/styles"
+const theme = createTheme()
 const styles = {
   formControl: {
     margin: "1rem",
     minWidth: 120,
     marginBottom: "30px",
     display: "flex",
+
     width: "100%",
+
     alignItems: "center",
   },
 
@@ -20,11 +24,12 @@ const styles = {
   },
 
   container: {
-    padding: "5px",
-  },
+    padding: "1rem",
 
-  marginBottom: {
-    marginBottom: "30px",
+    width: "107%",
+    boxShadow: "0 0 10px rgba(1, 1, 1, 0.4)",
+    height: "600px",
+    overflow: "auto",
   },
 
   listTitle: {
@@ -37,6 +42,13 @@ const styles = {
 
   select: {
     width: "80%",
+  },
+  label: {
+    position: "absolute",
+    fontSize: theme.typography.pxToRem(20),
+    fontWeight: "bold",
+    left: theme.spacing(1),
+    top: theme.spacing(-1.3),
   },
 }
 
