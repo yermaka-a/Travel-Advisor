@@ -1,6 +1,6 @@
 import classes from "./styles"
 import { styled } from "@mui/material/styles"
-
+import { useGetPlace } from "../../states"
 import { AppBar, Toolbar, Typography, InputBase, Box } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 const Search = styled("div")({
@@ -13,8 +13,15 @@ const Search = styled("div")({
   width: "100%",
   alignSelf: "right",
 })
+import { debounce } from "~/utils"
 
 export const Header = () => {
+
+    const setPlace = useGetPlace((state) => state.setPlace)
+   const  changePlaceNameHandler = (e: React.ChangeEvent<HTMLInputElement>)=>{
+        debounce(()=> setPlace(e.target.value), 500)
+
+    }
   return (
     <AppBar sx={classes.appbar} position="static">
       <Toolbar sx={classes.toolbar}>
@@ -29,7 +36,7 @@ export const Header = () => {
             <Box sx={classes.searchIcon}>
               <SearchIcon />
             </Box>
-            <InputBase sx={classes.inputRoot} placeholder="Поиск..." />
+            <InputBase onChange={(e) => setPlace(e.target.value)} sx={classes.inputRoot} placeholder="Поиск..." />
           </Search>
         </Box>
       </Toolbar>

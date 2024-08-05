@@ -11,3 +11,8 @@ export interface PlacesStore {
   setType: (type: string) => void
   getPlacesData: (sw?: Bounds["sw"], ne?: Bounds["ne"]) => void
 }
+
+export interface IGetPlace {
+  place: string
+  setPlace: (place: string) => void
+}
