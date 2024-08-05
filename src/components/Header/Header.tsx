@@ -14,7 +14,7 @@ const Search = styled("div")({
   alignSelf: "right",
 })
 
-const Header = () => {
+export const Header = () => {
   return (
     <AppBar sx={classes.appbar} position="static">
       <Toolbar sx={classes.toolbar}>
@@ -36,5 +36,3 @@ const Header = () => {
     </AppBar>
   )
 }
-
-export default Header

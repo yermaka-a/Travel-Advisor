@@ -1,8 +1,8 @@
 import { CssBaseline, Grid } from "@mui/material"
 
-import Header from "./components/Header/Header"
-import Map from "./components/Map/Map"
-import List from "./components/List/List"
+import {Header} from "./components/Header"
+import {Map} from "./components/Map"
+import {List} from "./components/List"
 
 import ENV from "./config"
 import { YMaps } from "@pbe/react-yandex-maps"

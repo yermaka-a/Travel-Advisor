@@ -1,4 +1,4 @@
-import type { Place, PlaceDetails } from "./types"
+import type { Place, PlaceDetails as IPlaceDetails } from "./types"
 import classes from "./styles"
 import { useState } from "react"
 import {
@@ -22,8 +22,8 @@ import cameraBlockUrl from "../../assets/camera-block.svg"
 
 import { getPlaceDetails } from "../../api"
 
-const PlaceDetails = ({ place }: { place: Place }) => {
-  const [placeData, setPlaceData] = useState<PlaceDetails | null>(null)
+ export const PlaceDetails = ({ place }: { place: Place }) => {
+  const [placeData, setPlaceData] = useState<IPlaceDetails | null>(null)
   const [isOpen, changeOpen] = useState<boolean>(false)
   const [isUrl, setUrl] = useState<boolean>(true)
 
@@ -128,5 +128,3 @@ const PlaceDetails = ({ place }: { place: Place }) => {
     </Card>
   )
 }
-
-export default PlaceDetails

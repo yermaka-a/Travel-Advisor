@@ -12,7 +12,7 @@ const MapContainer = styled("div")({
   height: "100%",
 })
 
-const Map = () => {
+export const Map = () => {
   const yMapRef = useRef<ymaps.Map>()
 
   const getPlacesData = usePlacesStore((state) => state.getPlacesData)
@@ -76,4 +76,3 @@ const Map = () => {
   )
 }
 
-export default Map

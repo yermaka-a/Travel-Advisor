@@ -8,11 +8,11 @@ import {
   FormControl,
   Select,
 } from "@mui/material"
-import PlaceDetails from "../PlaceDetails/PlaceDetails"
-import { usePlacesStore } from "../../states/index"
+import {PlaceDetails} from "../PlaceDetails"
+import { usePlacesStore } from "../../states"
 
 import { ListProps } from "./types"
-const List = () => {
+export const List = () => {
   const { places, type, rating, setRating, setType, getPlacesData } =
     usePlacesStore<ListProps>((state) => ({
       places: state.places,
@@ -80,5 +80,3 @@ const List = () => {
     </div>
   )
 }
-
-export default List
