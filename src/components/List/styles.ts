@@ -50,6 +50,14 @@ const styles = {
     left: theme.spacing(1),
     top: theme.spacing(-1.3),
   },
+  thatsIt:{
+    textAlign: "center",
+    fontSize: "1.1rem",
+    fontWeight: "bold",
+    marginBottom: "2px",
+    marginTop: "2px",
+    color: "#0bdb50"
+  }
 }
 
 export default styles

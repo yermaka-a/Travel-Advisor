@@ -1,10 +1,10 @@
 import classes from "./styles"
-
 import { Grid, Typography, InputLabel, MenuItem, FormControl, Select } from "@mui/material"
 import { PlaceDetails } from "../PlaceDetails"
 import { usePlacesStore } from "../../states"
 
-import { ListProps } from "./types"
+import { ListProps, TPlaces } from "./types"
+import { SyntheticEvent, useEffect, useRef, useState } from "react"
 export const List = () => {
     const { places, type, rating, setRating, setType, getPlacesData } = usePlacesStore<ListProps>((state) => ({
         places: state.places,
@@ -14,6 +14,41 @@ export const List = () => {
         setType: state.setType,
         getPlacesData: state.getPlacesData,
     }))
+    const getCurrentPlaceValue = useRef(0)
+    const [listPlaces, setListPlaces] = useState<TPlaces>([])
+
+    useEffect(() => {
+        const listPlaces: TPlaces = []
+        for (let i = getCurrentPlaceValue.current; i < getCurrentPlaceValue.current + 10; i++) {
+            if (i < places.length) {
+                listPlaces.push(places[i])
+            }
+        }
+        getCurrentPlaceValue.current += 10
+        setListPlaces(listPlaces)
+        return () => {
+            getCurrentPlaceValue.current = 0
+        }
+    }, [places])
+
+    function changePlaces(event: SyntheticEvent<HTMLDivElement, UIEvent>): void {
+        const hiddenHeight = event.currentTarget.scrollTop
+        const visibleHeight = event.currentTarget.clientHeight
+        const height = event.currentTarget.scrollHeight
+        if (getCurrentPlaceValue.current < places.length) {
+            if (hiddenHeight + visibleHeight >= height - 200) {
+                const listPlaces: TPlaces = []
+
+                for (let i = getCurrentPlaceValue.current; i < getCurrentPlaceValue.current + 10; i++) {
+                    if (i < places.length) {
+                        listPlaces.push(places[i])
+                    }
+                }
+                getCurrentPlaceValue.current += 10
+                setListPlaces((prev) => prev.concat(listPlaces))
+            }
+        }
+    }
 
     return (
         <div style={{ paddingRight: "1rem" }}>
@@ -60,14 +95,15 @@ export const List = () => {
                     <MenuItem value={5}>От 5.0</MenuItem>
                 </Select>
             </FormControl>
-            <Grid sx={classes.container} spacing={3}>
-                {places
+            <Grid sx={classes.container} spacing={3} onScroll={changePlaces}>
+                {listPlaces
                     .filter((place) => +place?.rate >= rating)
                     .map((place) => (
                         <Grid key={place.xid} item xs={12}>
                             <PlaceDetails place={place} />
                         </Grid>
                     ))}
+                <Typography sx={classes.thatsIt}>Все места, что удалось найти!</Typography>
             </Grid>
         </div>
     )
