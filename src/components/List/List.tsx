@@ -5,8 +5,8 @@ import { PlaceDetails } from "../PlaceDetails"
 import { usePlacesStore } from "../../states"
 
 import { ListProps, TPlaces } from "./types"
-import { SyntheticEvent, useEffect, useRef, useState } from "react"
-import { WidthFull } from "@mui/icons-material"
+import { SyntheticEvent, useLayoutEffect, useRef, useState } from "react"
+
 export const List = () => {
     const { places, type, rating, setRating, setType, getPlacesData } = usePlacesStore<ListProps>((state) => ({
         places: state.places,
@@ -18,9 +18,10 @@ export const List = () => {
     }))
     const getCurrentPlaceValue = useRef(0)
     const [listPlaces, setListPlaces] = useState<TPlaces>([])
-
-    useEffect(() => {
+    const listRef = useRef<HTMLDivElement>(null)
+    useLayoutEffect(() => {
         const listPlaces: TPlaces = []
+        listRef.current && listRef.current.scrollTo(0, 0)
         for (let i = getCurrentPlaceValue.current; i < getCurrentPlaceValue.current + 10; i++) {
             if (i < places.length) {
                 listPlaces.push(places[i])
@@ -97,7 +98,7 @@ export const List = () => {
                     <MenuItem value={5}>От 5.0</MenuItem>
                 </Select>
             </FormControl>
-            <Grid sx={classes.container} spacing={3} onScroll={changePlaces}>
+            <Grid sx={classes.container} spacing={3} onScroll={changePlaces} ref={listRef}>
                 {listPlaces
                     .filter((place) => +place?.rate >= rating)
                     .map((place) => (

@@ -1,7 +1,14 @@
 import classes from "./styles"
+
 import { styled } from "@mui/material/styles"
 import { AppBar, Toolbar, Typography, InputBase, Box } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
+
+import { IGeocodeResult } from "yandex-maps"
+import { useGetYMapRef } from "~/states"
+import { useRef } from "react"
+
+import { debounce } from "~/utils"
 const Search = styled("div")({
     position: "relative",
     paddingLeft: "1rem",
@@ -12,31 +19,33 @@ const Search = styled("div")({
     width: "100%",
     alignSelf: "right",
 })
-import { debounce } from "~/utils"
-import { IGeocodeResult } from "yandex-maps"
-import { useGetYMapRef } from "~/states"
 
 export const Header = () => {
     const yMapRef = useGetYMapRef((state) => state.yMapRef)
-
-    const changePlaceNameHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const getPlaceCoords = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-            const placeName = e.target.value
-            let res: IGeocodeResult | undefined = undefined
-
-            if (yMapRef) {
+    const getPlaceCoords = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const placeName = e.target.value
+        let res: IGeocodeResult | undefined = undefined
+        try {
+            if (yMapRef && placeName) {
                 res = await yMapRef.geocode(placeName)
             }
             if (!res) {
                 new Error("Geocoder object throw error during geocoding: ", res)
             } else {
                 // найти объекты для поиска и получить их названия и координаты
-                console.log("geocoder object was success!: ", res.geoObjects.get(0).geometry.getCoordinates())
+                console.log(
+                    "geocoder object was success!: ",
+                    res.geoObjects.each((el) => console.log("geocoder element: ", el.properties.get("name", {}))),
+                    // создать объект для подсказок и получить их названия и координаты, далее отрисовать выбранный объект на карте с определёнными свойствами
+                )
             }
+        } catch (error) {
+            console.error("Geocoder object throw error during geocoding: ", error)
         }
-        const debouncedGetPlaceCoords = debounce(() => getPlaceCoords(e), 1200)
-        debouncedGetPlaceCoords()
     }
+
+    const getDebouncePlaceCoords = debounce(getPlaceCoords, 1000)
+
     return (
         <AppBar sx={classes.appbar} position="static">
             <Toolbar sx={classes.toolbar}>
@@ -51,7 +60,13 @@ export const Header = () => {
                         <Box sx={classes.searchIcon}>
                             <SearchIcon />
                         </Box>
-                        <InputBase onChange={(e) => changePlaceNameHandler(e)} sx={classes.inputRoot} placeholder="Поиск..." />
+                        <InputBase
+                            onChange={(e) => {
+                                getDebouncePlaceCoords(e)
+                            }}
+                            sx={classes.inputRoot}
+                            placeholder="Поиск..."
+                        />
                     </Search>
                 </Box>
             </Toolbar>
