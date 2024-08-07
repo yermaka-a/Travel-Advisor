@@ -57,6 +57,11 @@ const styles = {
     marginBottom: "2px",
     marginTop: "2px",
     color: "#0bdb50"
+  },
+  sadIcon: {
+    color: "#DCDCDC,",
+    minHeight: "50%",
+    minWidth: "100%"
   }
 }
 

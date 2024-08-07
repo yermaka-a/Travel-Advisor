@@ -1,10 +1,12 @@
 import classes from "./styles"
-import { Grid, Typography, InputLabel, MenuItem, FormControl, Select } from "@mui/material"
+import { Grid, Typography, InputLabel, MenuItem, FormControl, Select, Divider, Box, Icon } from "@mui/material"
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied"
 import { PlaceDetails } from "../PlaceDetails"
 import { usePlacesStore } from "../../states"
 
 import { ListProps, TPlaces } from "./types"
 import { SyntheticEvent, useEffect, useRef, useState } from "react"
+import { WidthFull } from "@mui/icons-material"
 export const List = () => {
     const { places, type, rating, setRating, setType, getPlacesData } = usePlacesStore<ListProps>((state) => ({
         places: state.places,
@@ -103,7 +105,19 @@ export const List = () => {
                             <PlaceDetails place={place} />
                         </Grid>
                     ))}
-                <Typography sx={classes.thatsIt}>Все места, что удалось найти!</Typography>
+                {listPlaces.filter((place) => +place?.rate >= rating).length > 0 ? (
+                    <Typography sx={classes.thatsIt}>Все места, что удалось найти!</Typography>
+                ) : (
+                    <Typography sx={classes.thatsIt} style={{ color: "#808088" }}>
+                        <Divider />
+                        К сожалению таких мест нет!
+                        <br /> Попробуйте изменить параметры поиска...
+                        <Divider />
+                        <Icon sx={{ width: "100px", height: "100px" }}>
+                            <SentimentDissatisfiedIcon sx={classes.sadIcon} />
+                        </Icon>
+                    </Typography>
+                )}
             </Grid>
         </div>
     )
