@@ -3,14 +3,13 @@ import { CssBaseline, Grid } from "@mui/material"
 import { Header } from "./components/Header"
 import { Map } from "./components/Map"
 import { List } from "./components/List"
-
-import ENV from "./config"
 import { YMaps } from "@pbe/react-yandex-maps"
+import ENV from "./config"
 
 const App = () => {
     return (
         <>
-            <YMaps query={{ apikey: ENV.Y_API_KEY } }>
+            <YMaps query={{ apikey: ENV.Y_API_KEY }}>
                 <CssBaseline />
                 <Header />
                 <Grid container spacing={3}>
