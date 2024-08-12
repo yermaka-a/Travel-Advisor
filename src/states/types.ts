@@ -18,8 +18,12 @@ export interface IGetPlace {
     getPlaceCoords: (place: string) => void
 }
 
-
 export interface IGetYMapRef {
-    yMapRef: YMapsApi | null;
+    yMapRef: YMapsApi | null
     setYMapRef: (yMapRef: YMapsApi) => void
+}
+
+export interface IGetShow {
+    show: boolean
+    setShow: (value: boolean) => void
 }

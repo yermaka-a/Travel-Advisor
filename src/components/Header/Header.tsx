@@ -5,13 +5,14 @@ import { AppBar, Toolbar, Typography, InputBase, Box } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 
 import { HintList } from "./HintList"
-import { useGetYMapRef } from "~/states"
+import { useGetShow, useGetYMapRef } from "~/states"
 
 import { debounce } from "~/utils"
 import { useState } from "react"
 
 import nextId, { resetId } from "react-id-generator"
 import { IExtDataManager, THints } from "./types"
+import { IGetShow } from "~/states/types"
 const Search = styled("div")({
     position: "relative",
     paddingLeft: "1rem",
@@ -26,7 +27,13 @@ const Search = styled("div")({
 export const Header = () => {
     const yMapRef = useGetYMapRef((state) => state.yMapRef)
     const [hints, setHints] = useState<THints[]>([])
-    const [show, setShow] = useState(false)
+    const { show, setShow } = useGetShow<IGetShow>((state) => ({
+        show: state.show,
+        setShow: state.setShow,
+    }))
+
+    const [inputFill, setInputFill] = useState(false)
+    const [foundPlaces, setFoundPlaces] = useState(0)
     const getPlaceCoords = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const placeName = e.target.value
         let res = undefined
@@ -35,7 +42,8 @@ export const Header = () => {
                 res = await yMapRef.geocode(placeName)
             }
             if (!res) {
-                new Error("Geocoder object throw error during geocoding: ", res)
+                setFoundPlaces(0)
+                throw new Error("Geocoder object throw error during geocoding: ", res)
             } else {
                 // найти объекты для поиска и получить их названия и координаты
 
@@ -52,15 +60,29 @@ export const Header = () => {
                     })
                 })
                 resetId()
+                if (hints.length > 0) {
+                    setFoundPlaces(1)
+                } else {
+                    setFoundPlaces(-1)
+                }
                 setHints(hints)
             }
         } catch (error) {
             console.error("Geocoder object throw error during geocoding: ", error)
         }
     }
+    const getFillingInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (e.target.value.length > 0) {
+            setInputFill(true)
+        } else {
+            setInputFill(false)
+            setHints([])
+        }
+    }
 
+    const getDebounceFillingInput = debounce(getFillingInput, 1001)
     const getDebouncePlaceCoords = debounce(getPlaceCoords, 1000)
-
+    const debounceSetShow = debounce(setShow, 350)
     return (
         <AppBar sx={classes.appbar} position="static">
             <Toolbar sx={classes.toolbar}>
@@ -77,15 +99,20 @@ export const Header = () => {
                         </Box>
                         <InputBase
                             onChange={(e) => {
+                                getDebounceFillingInput(e)
                                 getDebouncePlaceCoords(e)
+                                setShow(true)
+
                             }}
-                            onFocus={() => setShow(true)}
-                            onBlur={() => setShow(false)}
+                            onFocus={(e) => {
+                                setShow(true)
+                                getFillingInput(e)
+                            }}
                             sx={classes.inputRoot}
                             placeholder="Поиск..."
                         />
                     </Search>
-                    <HintList hints={hints} show={show} />
+                    <HintList hints={hints} show={show} inputFill={inputFill} foundPlaces={foundPlaces} debounceSetShow={debounceSetShow} />
                 </Box>
             </Toolbar>
         </AppBar>

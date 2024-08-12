@@ -3,17 +3,19 @@ import { IDataManager } from "yandex-maps"
 export type THints = {
     id: string
     name: string
-    coordinates:  [number[], number[]]
+    coordinates: [number[], number[]]
     description: string
     text: string
 }
 
-interface IGeocoderMetaData  {
+interface IGeocoderMetaData {
     Address: {
-        Components: [{
-            Kind: string
-            Name: string
-        }]
+        Components: [
+            {
+                Kind: string
+                Name: string
+            },
+        ]
         country_code: string
         formatted: string
     }
@@ -40,15 +42,17 @@ interface IData {
     }
     name: string
     text: string
-    uriMetaData:{
+    uriMetaData: {
         URI: {
-            uri:    string
+            uri: string
         }
-        URIs:[{
-            uri: string}]
+        URIs: [
+            {
+                uri: string
+            },
+        ]
     }
 }
-
 
 export interface IExtDataManager extends IDataManager {
     getAll: () => IData
