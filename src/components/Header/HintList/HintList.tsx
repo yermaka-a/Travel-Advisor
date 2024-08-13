@@ -6,9 +6,35 @@ import { THints } from "../types"
 
 export const HintList = ({ hints, show, inputFill, foundPlaces, debounceSetShow }: IHintListProps) => {
     const getHintDetails = (hint: THints) => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
         // с помощью хинтов добавить метки на карту и кнопку подробнее, а также получить все данные с openStreetMap
         debounceSetShow(false)
     }
+    hello world
 
     if (foundPlaces === 1 && show && inputFill) {
         return (
