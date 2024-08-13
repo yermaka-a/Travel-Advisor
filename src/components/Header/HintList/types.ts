@@ -1,4 +1,3 @@
-import { MutableRefObject } from "react"
 import { THints } from "../types"
 
 export interface IHintListProps {

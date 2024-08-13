@@ -2,8 +2,6 @@ export const debounce = <T>(fn: (...args: T[]) => void, delay: number) => {
     let timeoutId: ReturnType<typeof setTimeout>
     return (...args: T[]) => {
         clearTimeout(timeoutId)
-        timeoutId = setTimeout(() =>
-            fn(...args)
-        , delay)
+        timeoutId = setTimeout(() => fn(...args), delay)
     }
 }

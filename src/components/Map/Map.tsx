@@ -6,11 +6,10 @@ import { useGetYMapRef } from "../../states"
 import { Bounds } from "./types"
 import { MapEvent } from "yandex-maps"
 import { usePlacesStore } from "../../states"
-import { YMapsApi } from "@pbe/react-yandex-maps/typings/util/typing"
 
 const MapContainer = styled("div")({
     width: "100%",
-    height: "100%",
+    height: "100%"
 })
 
 export const Map = () => {
@@ -23,7 +22,7 @@ export const Map = () => {
         lng: number
     }>({
         lat: 0,
-        lng: 0,
+        lng: 0
     })
 
     useEffect(() => {
@@ -63,7 +62,7 @@ export const Map = () => {
                 style={{ width: "100%", height: "100%" }}
                 state={{ center: [coordinates.lat, coordinates.lng], zoom: 10 }}
                 onClick={(e: MapEvent) => mapHandler(e)}
-                modules={['geocode']}
+                modules={["geocode"]}
                 onLoad={(api) => {
                     getStartedBounds()
                     setYMapRef(api)

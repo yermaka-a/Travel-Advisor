@@ -1,5 +1,5 @@
 import classes from "./styles"
-import { Grid, Typography, InputLabel, MenuItem, FormControl, Select, Divider, Box, Icon } from "@mui/material"
+import { Grid, Typography, InputLabel, MenuItem, FormControl, Select, Divider, Icon } from "@mui/material"
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied"
 import { PlaceDetails } from "../PlaceDetails"
 import { usePlacesStore } from "../../states"
@@ -14,7 +14,7 @@ export const List = () => {
         rating: state.rating,
         setRating: state.setRating,
         setType: state.setType,
-        getPlacesData: state.getPlacesData,
+        getPlacesData: state.getPlacesData
     }))
     const getCurrentPlaceValue = useRef(0)
     const [listPlaces, setListPlaces] = useState<TPlaces>([])
