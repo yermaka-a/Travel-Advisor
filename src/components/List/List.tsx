@@ -3,19 +3,21 @@ import { Grid, Typography, InputLabel, MenuItem, FormControl, Select, Divider, I
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied"
 import { PlaceDetails } from "../PlaceDetails"
 import { usePlacesStore } from "../../states"
-
-import { ListProps, TPlaces } from "./types"
+import { useShallow } from "zustand/react/shallow"
+import { TPlaces } from "./types"
 import { SyntheticEvent, useLayoutEffect, useRef, useState } from "react"
 
 export const List = () => {
-    const { places, type, rating, setRating, setType, getPlacesData } = usePlacesStore<ListProps>((state) => ({
-        places: state.places,
-        type: state.type,
-        rating: state.rating,
-        setRating: state.setRating,
-        setType: state.setType,
-        getPlacesData: state.getPlacesData
-    }))
+    const { places, type, rating, setRating, setType, getPlacesData } = usePlacesStore(
+        useShallow((state) => ({
+            places: state.places,
+            type: state.type,
+            rating: state.rating,
+            setRating: state.setRating,
+            setType: state.setType,
+            getPlacesData: state.getPlacesData
+        }))
+    )
     const getCurrentPlaceValue = useRef(0)
     const [listPlaces, setListPlaces] = useState<TPlaces>([])
     const listRef = useRef<HTMLDivElement>(null)

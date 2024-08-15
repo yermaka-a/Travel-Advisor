@@ -5,7 +5,7 @@ import { AppBar, Toolbar, Typography, InputBase, Box } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 
 import { HintList } from "./HintList"
-import { useGetShow, useGetYMapRef } from "~/states"
+import { useGetShow, useGetYMapsApiRef } from "~/states"
 
 import { debounce } from "~/utils"
 import { useState } from "react"
@@ -21,15 +21,15 @@ const Search = styled("div")({
     marginRight: "2rem",
     marginLeft: 0,
     width: "100%",
-    alignSelf: "right",
+    alignSelf: "right"
 })
 
 export const Header = () => {
-    const yMapRef = useGetYMapRef((state) => state.yMapRef)
+    const yMapsApiRef = useGetYMapsApiRef((state) => state.yMapsApiRef)
     const [hints, setHints] = useState<THints[]>([])
     const { show, setShow } = useGetShow<IGetShow>((state) => ({
         show: state.show,
-        setShow: state.setShow,
+        setShow: state.setShow
     }))
 
     const [inputFill, setInputFill] = useState(false)
@@ -38,8 +38,8 @@ export const Header = () => {
         const placeName = e.target.value
         let res = undefined
         try {
-            if (yMapRef && placeName) {
-                res = await yMapRef.geocode(placeName)
+            if (yMapsApiRef && placeName) {
+                res = await yMapsApiRef.geocode(placeName)
             }
             if (!res) {
                 setFoundPlaces(0)
@@ -56,7 +56,7 @@ export const Header = () => {
                         id: nextId("hintId-"),
                         coordinates: data.boundedBy,
                         description: data.description,
-                        text: data.text,
+                        text: data.text
                     })
                 })
                 resetId()
@@ -102,7 +102,6 @@ export const Header = () => {
                                 getDebounceFillingInput(e)
                                 getDebouncePlaceCoords(e)
                                 setShow(true)
-
                             }}
                             onFocus={(e) => {
                                 setShow(true)

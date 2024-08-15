@@ -1,22 +1,25 @@
 import classes from "./styles"
 import { styled } from "@mui/material/styles"
-import { useEffect, useRef, useState } from "react"
-import { Map as YMap } from "@pbe/react-yandex-maps"
-import { useGetYMapRef } from "../../states"
-import { Bounds } from "./types"
+import { useEffect, useState, useRef } from "react"
+import { Placemark, RulerControl, TypeSelector, Map as YMap } from "@pbe/react-yandex-maps"
+import { useGetYMapRef, useGetYMapsApiRef, usePlacesStore } from "~/states"
+import { Bounds, ITypeSelectorOptions } from "./types"
 import { MapEvent } from "yandex-maps"
-import { usePlacesStore } from "../../states"
-
+import starIcon from "~/assets/star.svg"
+import goldStar from "~/assets/gold-star.svg"
 const MapContainer = styled("div")({
     width: "100%",
     height: "100%"
 })
 
 export const Map = () => {
-    const yMapRef = useRef<ymaps.Map>()
-
-    const getPlacesData = usePlacesStore((state) => state.getPlacesData)
+    const OpenCardXid = usePlacesStore((state) => state.OpenCardXid)
+    const places = usePlacesStore((state) => state.places)
+    const rating = usePlacesStore((state) => state.rating)
     const setYMapRef = useGetYMapRef((state) => state.setYMapRef)
+    const getPlacesData = usePlacesStore((state) => state.getPlacesData)
+    const setYMapsApiRef = useGetYMapsApiRef((state) => state.setYMapsApiRef)
+    const yMapRef = useRef<ymaps.Map | null>(null)
     const [coordinates, setCoordinates] = useState<{
         lat: number
         lng: number
@@ -52,22 +55,65 @@ export const Map = () => {
     const getStartedBounds = () => {
         if (yMapRef.current) {
             const [ne /*north-east северо-восток правый верхний*/, sw /*south-west юго-восток левый нижний*/] = yMapRef.current.getBounds()
+
             setBounds({ ne, sw })
         }
     }
+
+    const addDragBehvaoiur = () => {
+        yMapRef.current?.events.add("drag", () => console.log("drag"))
+    }
+
     return (
         <MapContainer sx={classes.mapContainer}>
             <YMap
-                instanceRef={(yMap) => (yMapRef.current = yMap)}
-                style={{ width: "100%", height: "100%" }}
-                state={{ center: [coordinates.lat, coordinates.lng], zoom: 10 }}
-                onClick={(e: MapEvent) => mapHandler(e)}
-                modules={["geocode"]}
-                onLoad={(api) => {
-                    getStartedBounds()
-                    setYMapRef(api)
+                instanceRef={(yMap) => {
+                    yMapRef.current = yMap
+                    setYMapRef(yMap)
                 }}
-            />
+                style={{ width: "100%", height: "100%" }}
+                state={{ center: [coordinates.lat, coordinates.lng], zoom: 12 }}
+                onClick={(e: MapEvent) => mapHandler(e)}
+                modules={["geocode", "Placemark", "geoObject.addon.balloon", "geoObject.addon.hint"]}
+                onLoad={(api) => {
+                    setYMapsApiRef(api)
+                    getStartedBounds()
+                    addDragBehvaoiur()
+                }}>
+                <RulerControl defaultOptions={{ position: { right: 10, top: 10 }, visible: true }} />
+                <TypeSelector defaultType={"yandex#map"} options={{ float: "left" } as ITypeSelectorOptions} />
+                {places
+                    .filter((place) => +place?.rate >= rating)
+                    .map((place) =>
+                        place.xid === OpenCardXid ? (
+                            <Placemark
+                                key={place.xid}
+                                geometry={[place.point.lat, place.point.lon]}
+                                properties={{ hintContent: place.name }}
+                                options={{
+                                    iconLayout: "default#image",
+                                    iconImageHref: `${goldStar}`,
+                                    zIndex: 1000,
+                                    zIndexActive: 1000,
+                                    iconImageSize: [40, 40],
+                                    iconImageOffset: [-35, -63]
+                                }}
+                            />
+                        ) : (
+                            <Placemark
+                                key={place.xid}
+                                geometry={[place.point.lat, place.point.lon]}
+                                properties={{ hintContent: place.name }}
+                                options={{
+                                    iconLayout: "default#image",
+                                    iconImageHref: `${starIcon}`,
+                                    iconImageSize: [25, 25],
+                                    iconImageOffset: [-35, -63]
+                                }}
+                            />
+                        )
+                    )}
+            </YMap>
         </MapContainer>
     )
 }

@@ -2,11 +2,40 @@ import classes from "./styles"
 
 import { Box, Divider, List, ListItem, ListItemButton, Typography } from "@mui/material"
 import { IHintListProps } from "./types"
-/* import { THints } from "../types"
- */
+import { THints } from "../types"
+import { useGetYMapRef, useGetYMapsApiRef } from "~/states"
+
+import starIcon from "~/assets/star.svg"
+
 export const HintList = ({ hints, show, inputFill, foundPlaces, debounceSetShow }: IHintListProps) => {
-    const getHintDetails = (/* hint: THints */) => {
+    const yMapsApiRef = useGetYMapsApiRef((state) => state.yMapsApiRef)
+    const yMapRef = useGetYMapRef((state) => state.yMapRef)
+    const getHintDetails = (hint: THints) => {
         // с помощью хинтов добавить метки на карту и кнопку подробнее, а также получить все данные с openStreetMap
+
+        if (yMapsApiRef && yMapRef) {
+            yMapRef.geoObjects.removeAll()
+            yMapRef.setZoom(8)
+            const placemark = new yMapsApiRef.Placemark(
+                [hint.coordinates[0][0], hint.coordinates[0][1]],
+                {
+                    balloonContentHeader: hint.name,
+                    balloonContentBody: hint.description,
+                    balloonContentFooter: hint.text
+                },
+                {
+                    iconLayout: "default#image",
+
+                    iconImageHref: `${starIcon}`,
+                    iconImageSize: [35, 63],
+                    iconImageOffset: [-35, -63]
+                }
+            )
+
+            yMapRef.panTo([hint.coordinates[0][0], hint.coordinates[0][1]])
+
+            yMapRef.geoObjects.add(placemark)
+        }
         debounceSetShow(false)
     }
 
@@ -14,7 +43,7 @@ export const HintList = ({ hints, show, inputFill, foundPlaces, debounceSetShow 
         return (
             <List sx={classes.list}>
                 {hints.map((hint, i) => (
-                    <ListItemButton data-button onClick={() => getHintDetails(/* hint */)} key={hint.id} sx={classes.listItem}>
+                    <ListItemButton data-button onClick={() => getHintDetails(hint)} key={hint.id} sx={classes.listItem}>
                         <ListItem data-button sx={classes.listItem}>
                             {hint.name}
                         </ListItem>

@@ -5,40 +5,41 @@ import { PlacesStore } from "./types"
 import { Place } from "../components/PlaceDetails/types"
 import { Bounds } from "../components/Map/types"
 
-export const usePlacesStore = create<
-  PlacesStore,
-  [["zustand/devtools", never]]
->(
-  devtools((set, get) => ({
-    type: "restaurants",
-    rating: 0,
-    bounds: { ne: [], sw: [] },
-    places: [],
+export const usePlacesStore = create<PlacesStore, [["zustand/devtools", never]]>(
+    devtools((set, get) => ({
+        type: "restaurants",
+        rating: 0,
+        bounds: { ne: [], sw: [] },
+        places: [],
+        OpenCardXid: "",
+        setRating: (rating) => {
+            set(() => ({ rating }))
+        },
+        setType: (type) => {
+            set(() => ({ type }))
+        },
 
-    setRating: (rating) => {
-      set(() => ({ rating }))
-    },
-    setType: (type) => {
-      set(() => ({ type }))
-    },
+        getPlacesData: async (sw?: Bounds["sw"], ne?: Bounds["ne"]) => {
+            if (sw && ne) {
+                get().bounds = { ne: ne, sw: sw }
+                const data = await asyncGetPlacesData(sw, ne, get().type)
+                const filteredData = data.filter((el: Place) => el.name !== "")
+                set(() => ({ places: [...filteredData] }))
+            } else {
+                const data = await asyncGetPlacesData(get().bounds.sw, get().bounds.ne, get().type)
+                const filteredData = data.filter((el: Place) => el.name !== "")
+                set(() => ({ places: [...filteredData] }))
+            }
+        },
+        addDetailsToPlace: (placeDetails) => {
+            let idx = 0
 
-    getPlacesData: async (sw?: Bounds["sw"], ne?: Bounds["ne"]) => {
-      if (sw && ne) {
-        get().bounds = { ne: ne, sw: sw }
-        const data = await asyncGetPlacesData(sw, ne, get().type)
-        console.log(data)
-        const filteredData = data.filter((el: Place) => el.name !== "")
-        set(() => ({ places: [...filteredData] }))
-      } else {
-        const data = await asyncGetPlacesData(
-          get().bounds.sw,
-          get().bounds.ne,
-          get().type,
-        )
-        console.log(data)
-        const filteredData = data.filter((el: Place) => el.name !== "")
-        set(() => ({ places: [...filteredData] }))
-      }
-    },
-  })),
+            while (idx < get().places.length) {
+                if (get().places[idx].xid === placeDetails.xid) {
+                    set(() => ({ OpenCardXid: placeDetails.xid }))
+                }
+                idx += 1
+            }
+        }
+    }))
 )
