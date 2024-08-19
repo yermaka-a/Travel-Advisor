@@ -1,8 +1,8 @@
 import type { Place, PlaceDetails as IPlaceDetails } from "./types"
 import classes from "./styles"
-import { useState } from "react"
+import { SyntheticEvent, useState } from "react"
 import { Box, Typography, Card, CardMedia, CardContent, Zoom, ListItem, List, Button, Divider, ListItemIcon, ImageListItem, Icon } from "@mui/material"
-import { usePlacesStore } from "~/states"
+import { useGetYMapRef, usePlacesStore } from "~/states"
 import Rating from "@mui/material/Rating"
 import cameraBlockUrl from "../../assets/camera-block.svg"
 
@@ -12,14 +12,23 @@ export const PlaceDetails = ({ place }: { place: Place }) => {
     const [placeData, setPlaceData] = useState<IPlaceDetails | null>(null)
     const [isOpen, changeOpen] = useState<boolean>(false)
     const [isUrl, setUrl] = useState<boolean>(true)
-
+    const yMapRef = useGetYMapRef((state) => state.yMapRef)
     const addDetailsToPlace = usePlacesStore((state) => state.addDetailsToPlace)
 
     const seeDetailsOnMap = (placeData: IPlaceDetails) => {
-        if (placeData) addDetailsToPlace(placeData)
+        if (placeData) {
+            yMapRef?.setCenter([placeData.point.lat, placeData.point.lon])
+            addDetailsToPlace(placeData)
+        }
     }
-    const openPlaceDetails = async () => {
-        if (!isOpen && placeData === null) {
+
+    const handleOpenCardClick = async (e: SyntheticEvent<HTMLDivElement | HTMLButtonElement>) => {
+        if (!(e.target instanceof HTMLButtonElement)) {
+            changeOpen((prev) => !prev)
+            placeData && yMapRef?.setCenter([placeData.point.lat, placeData.point.lon])
+            placeData && seeDetailsOnMap(placeData)
+        }
+        if (!placeData && !isOpen) {
             getPlaceDetails(place.xid).then((data) => {
                 if (data) {
                     setPlaceData(data)
@@ -27,20 +36,13 @@ export const PlaceDetails = ({ place }: { place: Place }) => {
                 }
             })
         }
-        changeOpen((prev) => !prev)
     }
-
-    const showPlaceOnMap = () => {
-        changeOpen((prev) => !prev)
-    }
-
-    const cardOnClickHandler = async () => {
-        openPlaceDetails()
-        if (placeData && !isOpen) seeDetailsOnMap(placeData)
+    const handleButtonClick = () => {
+        placeData && seeDetailsOnMap(placeData)
     }
 
     return (
-        <Card elevation={6} sx={classes.card} onClick={cardOnClickHandler}>
+        <Card elevation={6} sx={classes.card} onClick={handleOpenCardClick}>
             <CardMedia sx={classes.cardMedia}>
                 <CardContent>
                     <Typography gutterBottom variant="h5">
@@ -90,7 +92,7 @@ export const PlaceDetails = ({ place }: { place: Place }) => {
                                                 {placeData?.address?.country && `${placeData?.address?.country}`}
                                             </ListItem>
                                             <ListItem>{placeData?.wikipedia_extracts?.text}</ListItem>
-                                            <Button color="inherit" variant="contained" sx={classes.btn} onClick={showPlaceOnMap}>
+                                            <Button color="inherit" variant="contained" sx={classes.btn} onClick={handleButtonClick}>
                                                 Показать на карте
                                             </Button>
                                         </List>

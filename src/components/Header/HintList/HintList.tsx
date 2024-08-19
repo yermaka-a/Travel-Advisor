@@ -5,14 +5,12 @@ import { IHintListProps } from "./types"
 import { THints } from "../types"
 import { useGetYMapRef, useGetYMapsApiRef } from "~/states"
 
-import starIcon from "~/assets/star.svg"
+import greenStar from "~/assets/green-star.svg"
 
 export const HintList = ({ hints, show, inputFill, foundPlaces, debounceSetShow }: IHintListProps) => {
     const yMapsApiRef = useGetYMapsApiRef((state) => state.yMapsApiRef)
     const yMapRef = useGetYMapRef((state) => state.yMapRef)
     const getHintDetails = (hint: THints) => {
-        // с помощью хинтов добавить метки на карту и кнопку подробнее, а также получить все данные с openStreetMap
-
         if (yMapsApiRef && yMapRef) {
             yMapRef.geoObjects.removeAll()
             yMapRef.setZoom(8)
@@ -26,7 +24,7 @@ export const HintList = ({ hints, show, inputFill, foundPlaces, debounceSetShow 
                 {
                     iconLayout: "default#image",
 
-                    iconImageHref: `${starIcon}`,
+                    iconImageHref: `${greenStar}`,
                     iconImageSize: [35, 63],
                     iconImageOffset: [-35, -63]
                 }

@@ -7,6 +7,9 @@ import { Bounds, ITypeSelectorOptions } from "./types"
 import { MapEvent } from "yandex-maps"
 import starIcon from "~/assets/star.svg"
 import goldStar from "~/assets/gold-star.svg"
+import { Place, PlaceDetails } from "../PlaceDetails/types"
+import { getPlaceDetails } from "~/api"
+
 const MapContainer = styled("div")({
     width: "100%",
     height: "100%"
@@ -19,6 +22,7 @@ export const Map = () => {
     const setYMapRef = useGetYMapRef((state) => state.setYMapRef)
     const getPlacesData = usePlacesStore((state) => state.getPlacesData)
     const setYMapsApiRef = useGetYMapsApiRef((state) => state.setYMapsApiRef)
+
     const yMapRef = useRef<ymaps.Map | null>(null)
     const [coordinates, setCoordinates] = useState<{
         lat: number
@@ -60,8 +64,32 @@ export const Map = () => {
         }
     }
 
-    const addDragBehvaoiur = () => {
-        yMapRef.current?.events.add("drag", () => console.log("drag"))
+    const handleShowInformationFromCardOnMap = (place: Place | PlaceDetails) => {
+        console.log(place)
+        getPlaceDetails(place.xid).then((placeData) => {
+            if (placeData) {
+                const balloonContent = `
+                                            <div>
+                                                ${placeData?.address?.house_number ? placeData?.address?.house_number : " "}
+                                                ${placeData?.address?.suburb ? placeData?.address?.suburb : " "}
+                                                ${placeData?.address?.city ? placeData?.address?.city : " "}
+                                                ${placeData?.address?.state ? placeData?.address?.state : " "}
+                                                ${placeData?.address?.country ? placeData?.address?.country : " "}
+                                            </div>
+
+                                            <img  src="${place.xid === OpenCardXid ? goldStar : starIcon}" />
+                                            <br/>
+                                            <div>
+                                            ${placeData?.wikipedia_extracts?.text ? placeData?.wikipedia_extracts?.text : " "}
+                                            </div>
+`
+
+                yMapRef.current?.balloon.open([placeData.point.lat, placeData.point.lon, placeData.point.lon], {
+                    contentHeader: placeData.name,
+                    contentBody: balloonContent
+                })
+            }
+        })
     }
 
     return (
@@ -72,13 +100,12 @@ export const Map = () => {
                     setYMapRef(yMap)
                 }}
                 style={{ width: "100%", height: "100%" }}
-                state={{ center: [coordinates.lat, coordinates.lng], zoom: 12 }}
+                defaultState={{ center: [coordinates.lat, coordinates.lng], zoom: 12 }}
                 onClick={(e: MapEvent) => mapHandler(e)}
                 modules={["geocode", "Placemark", "geoObject.addon.balloon", "geoObject.addon.hint"]}
                 onLoad={(api) => {
                     setYMapsApiRef(api)
                     getStartedBounds()
-                    addDragBehvaoiur()
                 }}>
                 <RulerControl defaultOptions={{ position: { right: 10, top: 10 }, visible: true }} />
                 <TypeSelector defaultType={"yandex#map"} options={{ float: "left" } as ITypeSelectorOptions} />
@@ -87,6 +114,7 @@ export const Map = () => {
                     .map((place) =>
                         place.xid === OpenCardXid ? (
                             <Placemark
+                                onLCick={() => console.log(OpenCardXid)}
                                 key={place.xid}
                                 geometry={[place.point.lat, place.point.lon]}
                                 properties={{ hintContent: place.name }}
@@ -98,6 +126,7 @@ export const Map = () => {
                                     iconImageSize: [40, 40],
                                     iconImageOffset: [-35, -63]
                                 }}
+                                onClick={() => handleShowInformationFromCardOnMap(place)}
                             />
                         ) : (
                             <Placemark
@@ -110,6 +139,7 @@ export const Map = () => {
                                     iconImageSize: [25, 25],
                                     iconImageOffset: [-35, -63]
                                 }}
+                                onClick={() => handleShowInformationFromCardOnMap(place)}
                             />
                         )
                     )}

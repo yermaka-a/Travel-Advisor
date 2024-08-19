@@ -12,6 +12,7 @@ export const usePlacesStore = create<PlacesStore, [["zustand/devtools", never]]>
         bounds: { ne: [], sw: [] },
         places: [],
         OpenCardXid: "",
+        XidFromCard: "",
         setRating: (rating) => {
             set(() => ({ rating }))
         },
@@ -40,6 +41,7 @@ export const usePlacesStore = create<PlacesStore, [["zustand/devtools", never]]>
                 }
                 idx += 1
             }
-        }
+        },
+      
     }))
 )

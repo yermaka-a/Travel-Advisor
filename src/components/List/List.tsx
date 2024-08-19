@@ -15,7 +15,8 @@ export const List = () => {
             rating: state.rating,
             setRating: state.setRating,
             setType: state.setType,
-            getPlacesData: state.getPlacesData
+            getPlacesData: state.getPlacesData,
+            getXidFromCard: state.getXidFromCard
         }))
     )
     const getCurrentPlaceValue = useRef(0)
