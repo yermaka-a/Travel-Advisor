@@ -25,11 +25,12 @@ export default {
     toolbar: {
         display: "flex",
         justifyContent: "space-between",
-        paddingBottom: "1rem"
+        paddingBottom: "0.5rem"
     },
     appbar: {
+        padding: "0.3rem",
         display: "flex",
-        marginBottom: "2rem",
+        marginBottom: "1rem",
         backgroundColor: theme.palette.primary.main
     },
     search: {
@@ -37,5 +38,27 @@ export default {
         flexDirection: "column",
         justifyContent: "center",
         right: "40rem"
+    },
+    linkStyle: {
+        textDecoration: "none",
+        cursor: "pointer"
+    },
+    SVGIcon: {
+        width: "2.4rem",
+        height: "2.4rem",
+        marginRight: "0.5rem"
+    },
+
+    logo: {
+        display: "flex",
+        flexDirection: "column",
+
+        alignItems: "center",
+        height: "100%"
+    },
+    linksContainer: {
+        display: "flex",
+
+        justifyContent: "space-between"
     }
 }

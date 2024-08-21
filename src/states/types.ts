@@ -35,3 +35,8 @@ export interface IGetYMapRef {
     yMapRef: Map | null
     setYMapRef: (yMapRef: Map) => void
 }
+
+export interface IChosenStore {
+    chosenPlaces: PlaceDetails[]
+    setChosen: (chosen: PlaceDetails) => void
+}

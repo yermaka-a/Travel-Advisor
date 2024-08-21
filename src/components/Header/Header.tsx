@@ -1,9 +1,11 @@
 import classes from "./styles"
 
 import { styled } from "@mui/material/styles"
-import { AppBar, Toolbar, Typography, InputBase, Box } from "@mui/material"
+import { AppBar, Toolbar, Typography, InputBase, Box, useMediaQuery, Link, Icon } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
-
+import bearIcon from "~/assets/bear.svg"
+import vkIcon from "~/assets/vk-icon.svg"
+import telegramIcon from "~/assets/telegram.svg"
 import { HintList } from "./HintList"
 import { useGetShow, useGetYMapsApiRef } from "~/states"
 
@@ -31,7 +33,7 @@ export const Header = () => {
         show: state.show,
         setShow: state.setShow
     }))
-
+    const matches = useMediaQuery("(min-width:  1300px)")
     const [inputFill, setInputFill] = useState(false)
     const [foundPlaces, setFoundPlaces] = useState(0)
     const getPlaceCoords = async (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -86,10 +88,30 @@ export const Header = () => {
     return (
         <AppBar sx={classes.appbar} position="static">
             <Toolbar sx={classes.toolbar}>
-                <Typography variant="h5" sx={classes.title}>
-                    Travel Advisor
-                </Typography>
-                <Box sx={classes.search} display="flex">
+                <Box sx={classes.logo}>
+                    <Typography variant="h5" sx={classes.title}>
+                        Travel Advisor
+                    </Typography>
+                    <Box sx={classes.linksContainer}>
+                        <Link sx={classes.linkStyle} target="_blank" href="https://vk.com/ermakad">
+                            <Icon sx={classes.SVGIcon}>
+                                <img style={classes.SVGIcon} src={vkIcon} alt="vk.com" />
+                            </Icon>
+                        </Link>
+                        <Link sx={classes.linkStyle} target="_blank" href="https://gitflic.ru/project/yermaka/resume">
+                            <Icon sx={classes.SVGIcon}>
+                                <img style={classes.SVGIcon} src={bearIcon} alt="gitflic_resume" />
+                            </Icon>
+                        </Link>
+                        <Link sx={classes.linkStyle} target="_blank" href="https://t.me/yermaka">
+                            <Icon sx={{ ...classes.SVGIcon }}>
+                                <img style={{ ...classes.SVGIcon, marginRight: "0rem" }} src={telegramIcon} alt="telegram link" />
+                            </Icon>
+                        </Link>
+                    </Box>
+                </Box>
+
+                <Box sx={{ ...classes.search, right: matches ? "40rem" : "0rem" }} display="flex">
                     <Typography variant="h6" sx={classes.title}>
                         Исследуйте новые места!
                     </Typography>
