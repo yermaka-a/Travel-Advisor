@@ -2,7 +2,7 @@ import type { Place, PlaceDetails as IPlaceDetails } from "./types"
 import classes from "./styles"
 import { SyntheticEvent, useState } from "react"
 import { Box, Typography, Card, CardMedia, CardContent, Zoom, ListItem, List, Button, Divider, ListItemIcon, ImageListItem, Icon } from "@mui/material"
-import { useGetYMapRef, usePlacesStore } from "~/states"
+import { useChosenStore, useGetYMapRef, usePlacesStore } from "~/states"
 import Rating from "@mui/material/Rating"
 import cameraBlockUrl from "../../assets/camera-block.svg"
 
@@ -14,7 +14,7 @@ export const PlaceDetails = ({ place }: { place: Place }) => {
     const [isUrl, setUrl] = useState<boolean>(true)
     const yMapRef = useGetYMapRef((state) => state.yMapRef)
     const addDetailsToPlace = usePlacesStore((state) => state.addDetailsToPlace)
-
+    const setChosen = useChosenStore((state) => state.setChosen)
     const seeDetailsOnMap = (placeData: IPlaceDetails) => {
         if (placeData) {
             yMapRef?.setCenter([placeData.point.lat, placeData.point.lon])
@@ -37,7 +37,10 @@ export const PlaceDetails = ({ place }: { place: Place }) => {
             })
         }
     }
-    const handleButtonClick = () => {
+    const handleAddChosenDataClick = () => {
+        if (placeData) setChosen(placeData)
+    }
+    const handleButtonShowOnMapClick = () => {
         placeData && seeDetailsOnMap(placeData)
     }
 
@@ -92,9 +95,14 @@ export const PlaceDetails = ({ place }: { place: Place }) => {
                                                 {placeData?.address?.country && `${placeData?.address?.country}`}
                                             </ListItem>
                                             <ListItem>{placeData?.wikipedia_extracts?.text}</ListItem>
-                                            <Button color="inherit" variant="contained" sx={classes.btn} onClick={handleButtonClick}>
-                                                Показать на карте
-                                            </Button>
+                                            <Box sx={classes.btnContainer}>
+                                                <Button color="inherit" variant="contained" sx={classes.btn} onClick={handleButtonShowOnMapClick}>
+                                                    Показать на карте
+                                                </Button>
+                                                <Button variant="contained" sx={classes.addBtn} onClick={handleAddChosenDataClick}>
+                                                    Добавить данные для скачивания
+                                                </Button>
+                                            </Box>
                                         </List>
                                     </Typography>
                                 </Zoom>

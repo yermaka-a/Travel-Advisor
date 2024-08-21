@@ -6,5 +6,6 @@ export const useChosenStore = create<IChosenStore>((set, get) => ({
     setChosen: (chosen) => {
         get().chosenPlaces.push(chosen)
         set({ chosenPlaces: get().chosenPlaces })
+        console.log(get().chosenPlaces)
     }
 }))
