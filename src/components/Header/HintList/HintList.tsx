@@ -10,10 +10,11 @@ import greenStar from "~/assets/green-star.svg"
 export const HintList = ({ hints, show, inputFill, foundPlaces, debounceSetShow }: IHintListProps) => {
     const yMapsApiRef = useGetYMapsApiRef((state) => state.yMapsApiRef)
     const yMapRef = useGetYMapRef((state) => state.yMapRef)
-    const getHintDetails = (hint: THints) => {
+    const getHintDetails = async (hint: THints) => {
         if (yMapsApiRef && yMapRef) {
             yMapRef.geoObjects.removeAll()
             yMapRef.setZoom(8)
+
             const placemark = new yMapsApiRef.Placemark(
                 [hint.coordinates[0][0], hint.coordinates[0][1]],
                 {

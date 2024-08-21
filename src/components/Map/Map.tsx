@@ -51,8 +51,10 @@ export const Map = () => {
 
     const mapHandler = (e: MapEvent) => {
         const [ne /*north-east северо-восток правый верхний*/, sw /*south-west юго-восток левый нижний*/] = e.get("target").getBounds()
+
         setBounds({ ne, sw })
         const coords = e.get("coords")
+
         setCoordinates({ lat: coords[0], lng: coords[1] })
     }
 
