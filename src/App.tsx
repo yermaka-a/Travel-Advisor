@@ -8,6 +8,7 @@ import ENV from "./config"
 import { useGetShow } from "./states"
 
 import { SyntheticEvent } from "react"
+import { ChosenList } from "./components/ChosenList/ChosenList"
 
 const App = () => {
     const setShow = useGetShow((state) => state.setShow)
@@ -31,6 +32,7 @@ const App = () => {
                     </Grid>
                 </Grid>
             </YMaps>
+            <ChosenList />
         </div>
     )
 }
