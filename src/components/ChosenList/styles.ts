@@ -23,6 +23,9 @@ export default {
         position: "relative",
         padding: "0.3rem",
         display: "flex",
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        flexDirection: "row",
         marginBottom: "1rem",
         backgroundColor: theme.palette.primary.main
     }
