@@ -28,8 +28,8 @@ export const Map = () => {
         lat: number
         lng: number
     }>({
-        lat: 0,
-        lng: 0
+        lat: 55.45,
+        lng: 37.37
     })
 
     useEffect(() => {
@@ -94,6 +94,13 @@ export const Map = () => {
         })
     }
 
+    const State = {
+        getState: () => {
+            if (coordinates.lat && coordinates.lng) return { center: [coordinates.lat, coordinates.lng], zoom: 10 }
+            return { center: [55.45, 37.37], zoom: 10 }
+        }
+    }
+
     return (
         <MapContainer sx={classes.mapContainer}>
             <YMap
@@ -102,7 +109,7 @@ export const Map = () => {
                     setYMapRef(yMap)
                 }}
                 style={{ width: "100%", height: "100%" }}
-                defaultState={{ center: [coordinates.lat, coordinates.lng], zoom: 12 }}
+                defaultState={State.getState()}
                 onClick={(e: MapEvent) => mapHandler(e)}
                 modules={["geocode", "Placemark", "geoObject.addon.balloon", "geoObject.addon.hint"]}
                 onLoad={(api) => {
