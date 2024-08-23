@@ -1,4 +1,4 @@
-import { AppBar, Container, List } from "@mui/material"
+import { AppBar, Container, Grid, List } from "@mui/material"
 import { createPortal } from "react-dom"
 
 import { useChosenStore } from "~/states"
@@ -7,8 +7,8 @@ import { ChosenDetails } from "./ChosenDetails"
 import { Logo } from "../ui/logo"
 import { ChosenButton } from "../ui/ChosenButton"
 
-const ChosenListId = document.getElementById("chosen-list")
-export const ChosenList = ({ close = true }: { close?: boolean }) => {
+const ChosenListById = document.getElementById("chosen-list")
+export const ChosenList = ({ close, onClose }: { close: boolean; onClose: (close: boolean) => void }) => {
     const chosenPlaces = useChosenStore((state) => state.chosenPlaces)
 
     const onSaveHandler = () => {
@@ -16,7 +16,7 @@ export const ChosenList = ({ close = true }: { close?: boolean }) => {
     }
 
     const onCloseHandler = () => {
-        console.log("close")
+        onClose(true)
     }
 
     return close
@@ -29,11 +29,13 @@ export const ChosenList = ({ close = true }: { close?: boolean }) => {
                           <Logo />
                           <ChosenButton onClick={onCloseHandler}>Закрыть</ChosenButton>
                       </AppBar>
-                      {chosenPlaces.map((place) => (
-                          <ChosenDetails key={place.xid} place={place} />
-                      ))}
+                      <Grid container sx={classes.grid}>
+                          {chosenPlaces.map((place) => (
+                              <ChosenDetails key={place.xid} place={place} />
+                          ))}
+                      </Grid>
                   </List>
               </Container>,
-              ChosenListId ?? document.body
+              ChosenListById ?? document.body
           )
 }

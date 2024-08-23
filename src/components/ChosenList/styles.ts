@@ -5,9 +5,10 @@ theme.palette.primary.main = "#f50057"
 export default {
     list: {
         position: "relative",
-        backgroundColor: "#ffffff",
+        backgroundColor: " #E5E4E2",
         width: "80%",
-        padding: "0rem 1rem 1rem 1rem"
+        padding: "0rem 1rem 1rem 1rem",
+        overflow: "scroll"
     },
     container: {
         top: 0,
@@ -20,7 +21,7 @@ export default {
         height: "100%"
     },
     appBar: {
-        position: "relative",
+        position: "sticky",
         padding: "0.3rem",
         display: "flex",
         justifyContent: "space-evenly",
@@ -28,5 +29,11 @@ export default {
         flexDirection: "row",
         marginBottom: "1rem",
         backgroundColor: theme.palette.primary.main
+    },
+    grid: {
+        display: "flex",
+        gap: "1rem",
+        flexDirection: "column",
+        width: "100%"
     }
 }

@@ -51,5 +51,5 @@ export interface Place {
         lon: number
         lat: number
     }
-    rate: number
+    rate: string
 }

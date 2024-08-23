@@ -47,12 +47,9 @@ export const ListParameters = () => {
                         setRating(+e.target.value)
                     }}>
                     <MenuItem value={0}>Любой</MenuItem>
+                    <MenuItem value={1}>От 1.0</MenuItem>
                     <MenuItem value={2}>От 2.0</MenuItem>
                     <MenuItem value={3}>От 3.0</MenuItem>
-                    <MenuItem value={4}>От 4.0</MenuItem>
-                    <MenuItem value={5}>От 5.0</MenuItem>
-                    <MenuItem value={6}>От 6.0</MenuItem>
-                    <MenuItem value={7}>От 7.0</MenuItem>
                 </Select>
             </FormControl>
         </>

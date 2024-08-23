@@ -7,6 +7,7 @@ import { useShallow } from "zustand/react/shallow"
 import { TPlaces } from "./types"
 import { SyntheticEvent, useLayoutEffect, useRef, useState } from "react"
 import { ListParameters } from "./ListParameters"
+import { sortPlaces } from "./lib/utils"
 
 export const List = () => {
     const { places, rating } = usePlacesStore(
@@ -59,14 +60,12 @@ export const List = () => {
             </Typography>
             <ListParameters />
             <Grid sx={classes.container} spacing={3} onScroll={changePlaces} ref={listRef}>
-                {listPlaces
-                    .filter((place) => +place?.rate >= rating)
-                    .map((place) => (
-                        <Grid key={place.xid} item xs={12}>
-                            <PlaceDetails place={place} />
-                        </Grid>
-                    ))}
-                {listPlaces.filter((place) => +place?.rate >= rating).length > 0 ? (
+                {sortPlaces(listPlaces, rating).map((place) => (
+                    <Grid key={place.xid} item xs={12}>
+                        <PlaceDetails place={place} />
+                    </Grid>
+                ))}
+                {sortPlaces(listPlaces, rating).length > 0 ? (
                     <Typography sx={classes.thatsIt}>Все места, что удалось найти!</Typography>
                 ) : (
                     <Typography sx={classes.thatsIt} style={{ color: "#808088" }}>

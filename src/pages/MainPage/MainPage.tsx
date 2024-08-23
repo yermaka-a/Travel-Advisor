@@ -1,7 +1,7 @@
 import { CssBaseline, Grid } from "@mui/material"
 
 import { Header } from "~/components/Header"
-import { Map } from "~/components/Map"
+import { CustomMap } from "~/components/Map"
 import { List } from "~/components/List"
 import { YMaps } from "@pbe/react-yandex-maps"
 import ENV from "~/config"
@@ -16,7 +16,7 @@ export const MainPage = () => {
                     <List />
                 </Grid>
                 <Grid item xs={12} md={9}>
-                    <Map />
+                    <CustomMap />
                 </Grid>
             </Grid>
         </YMaps>

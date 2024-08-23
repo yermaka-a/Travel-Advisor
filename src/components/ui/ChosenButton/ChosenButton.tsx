@@ -1,4 +1,4 @@
-import Typography from "@mui/material/Typography"
+import { Typography } from "@mui/material"
 import classes from "./styles"
 import { IChosenButtonProps } from "./types"
 

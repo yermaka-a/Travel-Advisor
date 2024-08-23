@@ -15,7 +15,7 @@ const MapContainer = styled("div")({
     height: "100%"
 })
 
-export const Map = () => {
+export const CustomMap = () => {
     const OpenCardXid = usePlacesStore((state) => state.OpenCardXid)
     const places = usePlacesStore((state) => state.places)
     const rating = usePlacesStore((state) => state.rating)

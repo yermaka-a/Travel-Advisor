@@ -5,4 +5,5 @@ export interface IChosenButtonProps {
     styles?: React.CSSProperties
     sx?: SxProps<Theme>
     onClick?: () => void
+ 
 }

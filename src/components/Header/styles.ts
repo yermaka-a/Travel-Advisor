@@ -14,5 +14,9 @@ export default {
         display: "flex",
         marginBottom: "1rem",
         backgroundColor: theme.palette.primary.main
+    },
+    ".MuiBadge-badge": {
+        color: "black",
+        backgroundColor: "black"
     }
 }

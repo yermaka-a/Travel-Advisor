@@ -116,7 +116,7 @@ export const PlaceDetails = ({ place }: { place: Place }) => {
                         )}
                         <Box display="flex" justifyContent="space-between">
                             <Typography variant="body2">Рейтинг известности:</Typography>
-                            <Rating readOnly max={7} size="small" value={Number(place.rate)}></Rating>
+                            <Rating readOnly max={3} size="small" value={parseInt(place.rate)}></Rating>
                         </Box>
                     </Typography>
                 </CardContent>
