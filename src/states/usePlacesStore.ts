@@ -5,7 +5,7 @@ import { Place } from "../components/PlaceDetails/types"
 import { Bounds } from "../components/Map/types"
 
 export const usePlacesStore = create<PlacesStore>((set, get) => ({
-    type: "restaurants",
+    type: "cultural",
     rating: 0,
     bounds: { ne: [], sw: [] },
     places: [],

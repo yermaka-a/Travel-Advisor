@@ -8,7 +8,8 @@ export default {
         backgroundColor: " #E5E4E2",
         width: "80%",
         padding: "0rem 1rem 1rem 1rem",
-        overflow: "scroll"
+        overflow: "scroll",
+        overflowX: "hidden"
     },
     container: {
         top: 0,
@@ -24,11 +25,17 @@ export default {
         position: "sticky",
         padding: "0.3rem",
         display: "flex",
+        alignItems: "center",
+        flexDirection: "column",
+        marginBottom: "1rem",
+        backgroundColor: theme.palette.primary.main
+    },
+    BoxContainer: {
+        display: "flex",
         justifyContent: "space-evenly",
         alignItems: "center",
         flexDirection: "row",
-        marginBottom: "1rem",
-        backgroundColor: theme.palette.primary.main
+        width: "100%"
     },
     grid: {
         display: "flex",

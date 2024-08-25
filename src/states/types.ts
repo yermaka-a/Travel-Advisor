@@ -39,4 +39,6 @@ export interface IGetYMapRef {
 export interface IChosenStore {
     chosenPlaces: PlaceDetails[]
     setChosen: (chosen: PlaceDetails) => void
+    deleteChosen: (chosen: PlaceDetails) => void
+    clearStore: () => void
 }

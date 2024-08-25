@@ -1,22 +1,25 @@
-import { AppBar, Container, Grid, List } from "@mui/material"
+import { AppBar, Box, Container, Divider, Grid, List } from "@mui/material"
 import { createPortal } from "react-dom"
-
 import { useChosenStore } from "~/states"
 import classes from "./styles"
 import { ChosenDetails } from "./ChosenDetails"
 import { Logo } from "../ui/logo"
 import { ChosenButton } from "../ui/ChosenButton"
+import { transformDataToXLSX } from "./lib/libs"
 
 const ChosenListById = document.getElementById("chosen-list")
 export const ChosenList = ({ close, onClose }: { close: boolean; onClose: (close: boolean) => void }) => {
     const chosenPlaces = useChosenStore((state) => state.chosenPlaces)
-
+    const clearStore = useChosenStore((state) => state.clearStore)
     const onSaveHandler = () => {
-        console.log(chosenPlaces)
+        transformDataToXLSX(chosenPlaces)
     }
 
     const onCloseHandler = () => {
         onClose(true)
+    }
+    const onClearHandler = () => {
+        clearStore()
     }
 
     return close
@@ -25,10 +28,17 @@ export const ChosenList = ({ close, onClose }: { close: boolean; onClose: (close
               <Container maxWidth={false} sx={classes.container}>
                   <List sx={classes.list}>
                       <AppBar sx={classes.appBar}>
-                          <ChosenButton onClick={onSaveHandler}>Сохранить</ChosenButton>
-                          <Logo />
-                          <ChosenButton onClick={onCloseHandler}>Закрыть</ChosenButton>
+                          <Box sx={classes.BoxContainer}>
+                              <ChosenButton onClick={onClearHandler}>Очистить</ChosenButton>
+                              <Logo />
+                              <ChosenButton onClick={onCloseHandler}>Закрыть</ChosenButton>
+                          </Box>
+                          <ChosenButton onClick={onSaveHandler}>
+                              <Divider />
+                              Сохранить EXCEL
+                          </ChosenButton>
                       </AppBar>
+
                       <Grid container sx={classes.grid}>
                           {chosenPlaces.map((place) => (
                               <ChosenDetails key={place.xid} place={place} />
