@@ -2,10 +2,11 @@ import { Typography } from "@mui/material"
 import classes from "./styles"
 import { IChosenButtonProps } from "./types"
 
-export const ChosenButton = ({ children, sx, styles, onClick }: Readonly<IChosenButtonProps>) => {
+import { forwardRef } from "react"
+export const ChosenButton = forwardRef<HTMLElement, IChosenButtonProps>(({ children, sx, styles, onClick }, ref) => {
     return (
-        <Typography onClick={onClick} sx={classes.chosen && { ...classes.chosen, ...sx }} style={styles}>
+        <Typography ref={ref} onClick={onClick} sx={classes.chosen && { ...classes.chosen, ...sx }} style={styles}>
             {children}
         </Typography>
     )
-}
+})
