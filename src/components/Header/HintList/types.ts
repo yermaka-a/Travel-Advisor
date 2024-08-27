@@ -1,4 +1,4 @@
-import { THints } from "../types"
+import { THints } from "../SearchingPlaces/types"
 
 export interface IHintListProps {
     hints: THints[]

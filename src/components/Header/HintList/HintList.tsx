@@ -2,7 +2,7 @@ import classes from "./styles"
 
 import { Box, Divider, List, ListItem, ListItemButton, Typography } from "@mui/material"
 import { IHintListProps } from "./types"
-import { THints } from "../types"
+import { THints } from "../SearchingPlaces/types"
 import { useGetYMapRef, useGetYMapsApiRef } from "~/states"
 
 import greenStar from "~/assets/green-star.svg"

@@ -4,7 +4,7 @@ import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied
 import { PlaceDetails } from "../PlaceDetails"
 import { usePlacesStore } from "../../states"
 import { useShallow } from "zustand/react/shallow"
-import { TPlaces } from "./types"
+import { Place, TPlaces } from "./types"
 import { SyntheticEvent, useLayoutEffect, useRef, useState } from "react"
 import { ListParameters } from "./ListParameters"
 import { sortPlaces } from "./lib/utils"
@@ -24,7 +24,7 @@ export const List = () => {
         listRef.current && listRef.current.scrollTo(0, 0)
         for (let i = getCurrentPlaceValue.current; i < getCurrentPlaceValue.current + 10; i++) {
             if (i < places.length) {
-                listPlaces.push(places[i])
+                listPlaces.push(places[i] as Place)
             }
         }
         getCurrentPlaceValue.current += 10
@@ -44,7 +44,7 @@ export const List = () => {
 
                 for (let i = getCurrentPlaceValue.current; i < getCurrentPlaceValue.current + 10; i++) {
                     if (i < places.length) {
-                        listPlaces.push(places[i])
+                        listPlaces.push(places[i] as Place)
                     }
                 }
                 getCurrentPlaceValue.current += 10
