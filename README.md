@@ -5,11 +5,12 @@ Welcome to the **Travel Advisor** project! This application is designed to help 
 ## Table of Contents 📚
 
 1. [Features](#features-)
-2. [Tech Stack](#tech-stack)
-3. [Getting Started](#getting-started)
-4. [Usage](#usage)
-5. [Contributing](#contributing)
-6. [License](#license)
+2. [Try on WEB 🌍](#try-on-web-)
+3. [Tech Stack](#tech-stack-)
+4. [Getting Started](#getting-started-)
+5. [Usage](#usage-)
+6. [Contributing](#contributing-)
+7. [License](#license-)
 
 ## Features 🚀
 
@@ -19,6 +20,17 @@ Welcome to the **Travel Advisor** project! This application is designed to help 
 - **Favorites Management**: Add and remove your favorite places to keep track of your must-visit spots.
 - **Downloadable Itinerary**: Once you're finished planning, you can download your selected places as an `.xls` file to keep your travel plans handy!
 
+## Try on WEB 🌍
+
+[Try on netlify!](https://yermaka-travel-advisor.netlify.app/)
+
+## Screenshots 📸
+  <details>
+        <summary>Click to see</summary>
+        <img src="https://github.com/user-attachments/assets/3673065d-b71e-4bdd-a0b0-174d7d78ab38" alt="travel-advisor-map">
+        <img src="https://github.com/user-attachments/assets/66c3f0d0-a2b2-49b2-a142-a67858ad2ab2" alt="travel-advisor-list">
+    </details>
+    
 ## Tech Stack 🛠️
 
 The **Travel Advisor** application is built using the following technologies:
