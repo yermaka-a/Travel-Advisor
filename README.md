@@ -1,30 +1,82 @@
-# React + TypeScript + Vite
+# Travel Advisor 🌍✈️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **Travel Advisor** project! This application is designed to help travelers explore and discover amazing places to visit, stay, and enjoy. Whether you're looking for hotels, bars, museums, or cultural landmarks, this app has got you covered! 
 
-Currently, two official plugins are available:
+## Table of Contents 📚
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. [Features](#features)
+2. [Tech Stack](#tech-stack)
+3. [Getting Started](#getting-started)
+4. [Usage](#usage)
+5. [Contributing](#contributing)
+6. [License](#license)
 
-## Expanding the ESLint configuration
+## Features 🚀
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Interactive Map**: Utilizes a large Yandex Map to visually explore locations.
+- **OpenTripMap API Integration**: Fetches a variety of places to relax, stay, and explore, including hotels, bars, and cultural sites (museums and attractions).
+- **Yandex Geocoder**: Easily search for locations using a search bar to find your desired spots quickly.
+- **Favorites Management**: Add and remove your favorite places to keep track of your must-visit spots.
+- **Downloadable Itinerary**: Once you're finished planning, you can download your selected places as an `.xls` file to keep your travel plans handy!
 
-- Configure the top-level `parserOptions` property like this:
+## Tech Stack 🛠️
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+The **Travel Advisor** application is built using the following technologies:
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **React** with TypeScript: For building a responsive and interactive user interface.
+- **Yarn**: For package management.
+- **Husky**: To manage Git hooks for better code quality.
+- **React Yandex Maps**: For embedding and customizing Yandex Maps in the application.
+- **Material-UI (MUI)**: To create a sleek and modern design with ready-to-use components.
+- **Axios**: For making API requests to fetch data from OpenTripMap.
+- **XLSX**: To handle the download functionality for exporting the itinerary.
+- **Zustand**: As a state management solution to keep track of user favorites and other app states.
+- **Vite**: For fast development and build processes.
+
+## Getting Started ⚙️
+
+To get started with the Travel Advisor project, follow these steps:
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/yourusername/travel-advisor.git
+   ```
+
+2. **Navigate to the Project Directory**:
+   ```bash
+   cd travel-advisor
+   ```
+
+3. **Install Dependencies**:
+   ```bash
+   yarn install
+   ```
+4. Configure `.env` file
+ 
+5. **Run the Development Server**:
+   ```bash
+   yarn dev
+   ```
+
+6. **Open Your Browser**: 
+   Visit `http://localhost:5173/` to view the application in action!
+
+## Usage 🗺️
+
+- **Searching for Places**: Use the search bar to find specific locations. The Yandex Geocoder will help you locate your desired spots.
+- **Exploring the Map**: Zoom in and out of the Yandex Map to discover various places. Click on markers to get more information.
+- **Managing Favorites**: Click the heart icon to add places to your favorites. You can easily remove them as well.
+- **Download Your Itinerary**: Once you've selected your favorite places, click the download button to save your itinerary as an `.xls` file.
+
+## Contributing 🤝
+
+We welcome contributions to enhance the Travel Advisor project! If you'd like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your branch and create a pull request.
+
+## License 📄
+
+This project is open-source and available under the MIT License.
