@@ -5,7 +5,7 @@ Welcome to the **Travel Advisor** project! This application is designed to help 
 ## Table of Contents 📚
 
 1. [Features](#features-)
-2. [Try on WEB 🌍](#try-on-web-)
+2. [**Try on WEB** 🌍](#try-on-web-)
 3. [Tech Stack](#tech-stack-)
 4. [Getting Started](#getting-started-)
 5. [Usage](#usage-)
@@ -22,7 +22,7 @@ Welcome to the **Travel Advisor** project! This application is designed to help 
 
 ## Try on WEB 🌍
 
-[Try on netlify!](https://yermaka-travel-advisor.netlify.app/)
+### [**Try on netlify!**](https://yermaka-travel-advisor.netlify.app/)
 
 ## Screenshots 📸
   <details>
