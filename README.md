@@ -4,7 +4,7 @@ Welcome to the **Travel Advisor** project! This application is designed to help 
 
 ## Table of Contents 📚
 
-1. [Features](#features)
+1. [Features](#features-)
 2. [Tech Stack](#tech-stack)
 3. [Getting Started](#getting-started)
 4. [Usage](#usage)
