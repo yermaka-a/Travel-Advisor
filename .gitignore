@@ -22,8 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-/src/api
-/src/config/index.ts
-.env
-/src/api/test_data.ts
+yarn-error.log
+yarn.lock

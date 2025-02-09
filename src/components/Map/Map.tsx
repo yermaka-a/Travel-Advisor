@@ -1,6 +1,6 @@
 import classes from "./styles"
 import { styled } from "@mui/material/styles"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useCallback } from "react"
 import { Placemark, RulerControl, TypeSelector, Map as YMap } from "@pbe/react-yandex-maps"
 import { useGetYMapRef, useGetYMapsApiRef, usePlacesStore } from "~/states"
 import { Bounds, ITypeSelectorOptions } from "./types"
@@ -94,12 +94,10 @@ export const CustomMap = () => {
         })
     }
 
-    const State = {
-        getState: () => {
-            if (coordinates.lat && coordinates.lng) return { center: [coordinates.lat, coordinates.lng], zoom: 10 }
-            return { center: [55.45, 37.37], zoom: 10 }
-        }
-    }
+    const getState = useCallback(() => {
+        if (coordinates.lat && coordinates.lng) return { center: [coordinates.lat, coordinates.lng], zoom: 10 }
+        return { center: [55.45, 37.37], zoom: 10 }
+    }, [coordinates.lat, coordinates.lng])
 
     return (
         <MapContainer sx={classes.mapContainer}>
@@ -109,7 +107,7 @@ export const CustomMap = () => {
                     setYMapRef(yMap)
                 }}
                 style={{ width: "100%", height: "100%" }}
-                defaultState={State.getState()}
+                state={getState()}
                 onClick={(e: MapEvent) => mapHandler(e)}
                 modules={["geocode", "Placemark", "geoObject.addon.balloon", "geoObject.addon.hint"]}
                 onLoad={(api) => {
